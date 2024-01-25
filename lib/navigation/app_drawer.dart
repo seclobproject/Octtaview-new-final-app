@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import '../authentication/login.dart';
 import '../resources/color.dart';
 
 class appdrawer extends StatefulWidget {
@@ -12,6 +13,17 @@ class appdrawer extends StatefulWidget {
 }
 
 class _appdrawerState extends State<appdrawer> {
+
+
+  Future<void> logout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('token');
+
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+            builder: (context) => loginpage()),
+            (route) => false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +39,30 @@ class _appdrawerState extends State<appdrawer> {
         padding: EdgeInsets.zero,
         children: [
 
+          SizedBox(height: 100,),
+          InkWell(
+            onTap: (){
+              logout();
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      'assets/svg/logout.svg',
+                      fit: BoxFit.cover,
+                    ),
 
+                    SizedBox(width: 15,),
+
+                    Text('Logout',style: TextStyle(fontWeight: FontWeight.w400,fontSize: 13,color: bg1),)
+                  ],
+                ),
+              ),
+            ),
+          ),
 
         ],
       ),

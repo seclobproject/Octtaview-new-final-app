@@ -73,8 +73,6 @@ class _loginpageState extends State<loginpage> {
     }
   }
 
-
-
   void _saveAndRedirectToHome(usertoken, userId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString("token", usertoken);
@@ -88,8 +86,6 @@ class _loginpageState extends State<loginpage> {
   }
 
 
-
-
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -98,8 +94,7 @@ class _loginpageState extends State<loginpage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          
-          
+
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Align(

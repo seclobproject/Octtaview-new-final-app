@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:octtaviewnew/screens/home/widgets/home_package.dart';
 import 'package:octtaviewnew/screens/home/widgets/verification_page.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../navigation/app_drawer.dart';
 import '../../resources/color.dart';
+import '../../services/home_service.dart';
+import '../../support/logger.dart';
 
 class homepage extends StatefulWidget {
   const homepage({super.key});
@@ -16,6 +18,42 @@ class homepage extends StatefulWidget {
 
 class _homepageState extends State<homepage> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+
+  var userid;
+  var homedata;
+  bool _isLoading = true;
+
+  Future _Homedetails() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userid = prefs.getString('userid');
+    var response = await HomeService.GetHomedata();
+    log.i('Home data Show.. $response');
+    setState(() {
+      homedata = response;
+
+    });
+  }
+
+  Future _initLoad() async {
+    await Future.wait(
+      [
+        _Homedetails()
+      ],
+    );
+    _isLoading = false;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _initLoad();
+    });
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -25,7 +63,11 @@ class _homepageState extends State<homepage> {
       endDrawerEnableOpenDragGesture: false,
       drawer: appdrawer(),
 
-      body: SingleChildScrollView(
+      body:  _isLoading
+          ?  Center(
+          child:CircularProgressIndicator()
+      )
+          :  SingleChildScrollView(
         child: Column(
           children: [
 
@@ -35,7 +77,7 @@ class _homepageState extends State<homepage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
                     onTap: () {
@@ -84,7 +126,7 @@ class _homepageState extends State<homepage> {
 
             Container(
               height: 25,
-              width: 75,
+              width: 85,
               decoration:BoxDecoration(
                 borderRadius: BorderRadius.all(
                   Radius.circular(10)
@@ -95,7 +137,7 @@ class _homepageState extends State<homepage> {
                   end: Alignment.bottomCenter, // Specify the alignment of the gradient (end at the right)
                 ),
               ),
-              child: Center(child: Text("OCCT123",style: TextStyle(color: btnttext),)),
+              child: Center(child: Text(homedata?['ownSponserId'] ?? 'No Data',style: TextStyle(color: btnttext,fontSize: 12),)),
 
             ),
 
@@ -178,7 +220,7 @@ class _homepageState extends State<homepage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("0",style:TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),),
+                        Text(homedata?['capitalAmount'].toString() ?? '0',style:TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),),
                         Text("Capital Amount",style:TextStyle(color: bg1,fontSize: 10),),
                       ],
                     ),
@@ -204,7 +246,10 @@ class _homepageState extends State<homepage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("0",style:TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),),
+                        Container(
+                            height:20,
+                            width: 70,
+                            child: Text(homedata?['totalIncome'].toString() ?? '0',style:TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),)),
                         Text("Wallet Amount ",style:TextStyle(color: bg1,fontSize: 10),),
                       ],
                     ),
@@ -222,7 +267,7 @@ class _homepageState extends State<homepage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("0",style:TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),),
+                        Text(homedata?['dailyBonus'].toString() ?? '0',style:TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),),
                         Text("9:00 PM November 20",style:TextStyle(color: btnttext,fontSize: 10),),
                         Text("Daily Bonus",style:TextStyle(color: bg1,fontSize: 10),),
                       ],
@@ -249,7 +294,7 @@ class _homepageState extends State<homepage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("0",style:TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),),
+                        Text(homedata?['myDownline'].toString() ?? '0',style:TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),),
                         Text("My Downline",style:TextStyle(color: bg1,fontSize: 10),),
                       ],
                     ),
@@ -267,7 +312,10 @@ class _homepageState extends State<homepage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("0",style:TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),),
+                        Container(
+                            height:20,
+                            width: 70,
+                            child: Text(homedata?['totalIncome'].toString() ?? '0',style:TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),)),
                         Text("Total Income",style:TextStyle(color: bg1,fontSize: 10),),
                       ],
                     ),
@@ -297,7 +345,7 @@ class _homepageState extends State<homepage> {
                         Column(
                           children: [
                             Text("Direct Income ",style: TextStyle(color: bg1,fontSize: 14,fontWeight: FontWeight.w700)),
-                            Text("0",style: TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),),
+                            Text(homedata?['directIncome'].toString() ?? '0',style: TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),),
                           ],
                         ),
 
@@ -335,8 +383,8 @@ class _homepageState extends State<homepage> {
                         children: [
                           Column(
                             children: [
-                              Text("Direct Income ",style: TextStyle(color: bg1,fontSize: 14,fontWeight: FontWeight.w700)),
-                              Text("0",style: TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),),
+                              Text("ROI Income ",style: TextStyle(color: bg1,fontSize: 14,fontWeight: FontWeight.w700)),
+                              Text(homedata?['levelRoi'].toString() ?? '0',style: TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),),
                             ],
                           ),
 
@@ -350,8 +398,8 @@ class _homepageState extends State<homepage> {
                             children: [
                               Column(
                                 children: [
-                                  Text("Direct Income ",style: TextStyle(color: bg1,fontSize: 14,fontWeight: FontWeight.w700)),
-                                  Text("0",style: TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),),
+                                  Text("Level Income",style: TextStyle(color: bg1,fontSize: 14,fontWeight: FontWeight.w700)),
+                                  Text(homedata?['levelRoi'].toString() ?? '0',style: TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),),
                                 ],
                               ),
 

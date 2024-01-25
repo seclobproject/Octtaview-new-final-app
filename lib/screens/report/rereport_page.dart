@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../resources/color.dart';
+import '../../services/report_service.dart';
+import '../../support/logger.dart';
 
 class reportpage extends StatefulWidget {
   const reportpage({super.key});
@@ -10,25 +12,61 @@ class reportpage extends StatefulWidget {
 }
 
 class _reportpageState extends State<reportpage> {
+
+  String? selectedValue;
+  String? selectedValue1;
+
+  var userid;
+  var reportdata;
+  bool _isLoading = true;
+
+  Future _Reportdetails() async {
+    var reqData = {
+      "reportName":"ROIIncome"
+    };
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userid = prefs.getString('userid');
+    var response = await ReportService.ReportData(reqData);
+    log.i('Report data List.. $response');
+    setState(() {
+      reportdata = response;
+
+    });
+  }
+
+  Future _initLoad() async {
+    await Future.wait(
+      [
+        _Reportdetails()
+      ],
+    );
+    _isLoading = false;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _initLoad();
+    });
+  }
+
+  final List<String> items = [
+    'Direct Income',
+    'Level Income ',
+    'ROI Income',
+  ];
+
+  final List<String> numberitems = [
+    '1',
+    '2',
+    '3',
+    '4',
+  ];
+
+
   @override
   Widget build(BuildContext context) {
-
-    final List<String> items = [
-      'Direct Income',
-      'Level Income ',
-      'ROI Income',
-    ];
-
-    final List<String> numberitems = [
-      '1',
-      '2',
-      '3',
-      '4',
-    ];
-
-    String? selectedValue;
-    String? selectedValue1;
-
 
 
     return  Scaffold(
@@ -37,7 +75,11 @@ class _reportpageState extends State<reportpage> {
         backgroundColor: sevensgbg,
         title: Text("Report", style: TextStyle(color: yellow2, fontSize: 18)),
       ),
-      body: Column(
+      body:   _isLoading
+          ?  Center(
+          child:CircularProgressIndicator()
+      )
+          :Column(
         children: [
 
           SizedBox(height: 10,),
@@ -69,6 +111,7 @@ class _reportpageState extends State<reportpage> {
                         item,
                         style: const TextStyle(
                           fontSize: 14,
+                          color: btnttext
                         ),
                       ),
                     ))
@@ -91,60 +134,61 @@ class _reportpageState extends State<reportpage> {
             ),
           ),
 
-          SizedBox(height: 10,),
-
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Padding(
-              padding:  EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: bottomtabclr,
-                    borderRadius: BorderRadius.all(Radius.circular(10))
-                ),
-                height: 30,
-                width: 100,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                      hint: Text(
-                        'Select Level',
-                        style: TextStyle(
-                          fontSize: 9,
-                          color: bg1,
-                        ),
-                      ),
-                      items: numberitems
-                          .map((String numberitems) => DropdownMenuItem<String>(
-                        value: numberitems,
-                        child: Text(
-                          numberitems,
-                          style: const TextStyle(
-                            fontSize: 12,
-                          ),
-                        ),
-                      ))
-                          .toList(),
-                      value: selectedValue1,
-                      onChanged: (String? value) {
-                        setState(() {
-                          selectedValue1 = value;
-                        });
-                      },
-                      icon: Icon(
-                          Icons.arrow_drop_down, // You can use any other icon as needed
-                          color: bg1,
-
-                      ),
-
-                    ),
-
-                  ),
-                ),
-              ),
-            ),
-          ),
+          // SizedBox(height: 10,),
+          //
+          // Align(
+          //   alignment: Alignment.bottomRight,
+          //   child: Padding(
+          //     padding:  EdgeInsets.symmetric(horizontal: 20),
+          //     child: Container(
+          //       decoration: BoxDecoration(
+          //           color: bottomtabclr,
+          //           borderRadius: BorderRadius.all(Radius.circular(10))
+          //       ),
+          //       height: 30,
+          //       width: 100,
+          //       child: Padding(
+          //         padding: const EdgeInsets.symmetric(horizontal: 10),
+          //         child: DropdownButtonHideUnderline(
+          //           child: DropdownButton<String>(
+          //             hint: Text(
+          //               'Select Level',
+          //               style: TextStyle(
+          //                 fontSize: 9,
+          //                 color: bg1,
+          //               ),
+          //             ),
+          //             items: numberitems
+          //                 .map((String numberitems) => DropdownMenuItem<String>(
+          //               value: numberitems,
+          //               child: Text(
+          //                 numberitems,
+          //                 style: const TextStyle(
+          //                   fontSize: 12,
+          //                     color: btnttext
+          //                 ),
+          //               ),
+          //             ))
+          //                 .toList(),
+          //             value: selectedValue1,
+          //             onChanged: (String? value) {
+          //               setState(() {
+          //                 selectedValue1 = value;
+          //               });
+          //             },
+          //             icon: Icon(
+          //                 Icons.arrow_drop_down, // You can use any other icon as needed
+          //                 color: bg1,
+          //
+          //             ),
+          //
+          //           ),
+          //
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
 
           SizedBox(height: 10,),
 
@@ -155,12 +199,6 @@ class _reportpageState extends State<reportpage> {
               thickness: .3,
             ),
           ),
-
-
-
-
-
-
 
           Expanded(
             child: ListView.builder(

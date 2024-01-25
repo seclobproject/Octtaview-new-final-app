@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../resources/color.dart';
+import '../../../services/home_service.dart';
+import '../../../support/logger.dart';
 import '../../wallet/widgets/qrcode_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class packages extends StatefulWidget {
   const packages({super.key});
@@ -11,6 +14,41 @@ class packages extends StatefulWidget {
 }
 
 class _packagesState extends State<packages> {
+
+
+  var userid;
+  var packagedata;
+  bool _isLoading = true;
+
+  Future _Homedetails() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userid = prefs.getString('userid');
+    var response = await HomeService.Getpackage();
+    log.i('package data Show.. $response');
+    setState(() {
+      packagedata = response;
+
+    });
+  }
+
+  Future _initLoad() async {
+    await Future.wait(
+      [
+        _Homedetails()
+      ],
+    );
+    _isLoading = false;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _initLoad();
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +62,11 @@ class _packagesState extends State<packages> {
         title: Text("Package", style: TextStyle(color: yellow2, fontSize: 18)),
       ),
 
-      body: Column(
+      body:  _isLoading
+          ?  Center(
+          child:CircularProgressIndicator()
+      )
+          : Column(
         children: [
 
           SizedBox(height: 10,),
@@ -47,8 +89,16 @@ class _packagesState extends State<packages> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text("Wallet Amount     :  ",style: TextStyle(color: bg1,fontSize: 10),),
-                        Text("Gold",style: TextStyle(color: btnttext,fontSize: 19,fontWeight: FontWeight.w700),),
+                        Text("Package Name     :  ",style: TextStyle(color: bg1,fontSize: 10),),
+                        Text(
+                          packagedata['packagename'] ?? 'No Data',
+                          style: TextStyle(
+                            color: packagedata['packagename'] != null ? btnttext : Colors.white,
+                            fontSize: 19,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+
 
                         Expanded(child: SizedBox()),
                         
@@ -84,7 +134,7 @@ class _packagesState extends State<packages> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text("Package Amount  :  ",style: TextStyle(color: bg1,fontSize: 10),),
-                        Text("₹200.00",style: TextStyle(color: btnttext,fontSize: 19,fontWeight: FontWeight.w700),),
+                        Text(packagedata['totalCapitalAmount'].toString(),style: TextStyle(color: btnttext,fontSize: 19,fontWeight: FontWeight.w700),),
                         Expanded(child: SizedBox()),
                         Text("Add Fund",style: TextStyle(color: btnttext,fontSize: 10),),
                       ],
@@ -112,7 +162,7 @@ class _packagesState extends State<packages> {
 
           Expanded(
             child: ListView.builder(
-                itemCount: 5,
+                itemCount: packagedata['addFundHistory'].length,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding:  EdgeInsets.symmetric(horizontal: 20),
@@ -126,12 +176,15 @@ class _packagesState extends State<packages> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("26 October 2023",style: TextStyle(color: btnttext,fontSize: 10)),
+                                Container(
+                                    width:68,
+                                    height: 15,
+                                    child: Text(packagedata['addFundHistory'][index]['createdAt'],style: TextStyle(color: btnttext,fontSize: 10))),
                                 Text("10:30 PM",style: TextStyle(color: btnttext,fontSize: 10)),
                               ],
                             ),
-                            Text("CPIA2XUZ8DJEXRS\nZWFZV1MS82Y",style: TextStyle(color: btnttext,fontSize: 10)),
-                            Text("₹ 101.00",style: TextStyle(color: btnttext,fontSize: 10)),
+                            Text(packagedata['addFundHistory'][index]['transactionCode'],style: TextStyle(color: btnttext,fontSize: 10)),
+                            Text(packagedata['addFundHistory'][index]['topUpAmount'].toString(),style: TextStyle(color: btnttext,fontSize: 10)),
 
                             Container(
                               height: 20,
@@ -140,7 +193,7 @@ class _packagesState extends State<packages> {
                                 color: greendark,
                                 borderRadius: BorderRadius.all(Radius.circular(10))
                               ),
-                              child: Center(child: Text("Rejected",style: TextStyle(fontSize: 8,color: bg1),)),
+                              child: Center(child: Text(packagedata['addFundHistory'][index]['status'],style: TextStyle(fontSize: 8,color: bg1),)),
                             )
                           ],
                         ),

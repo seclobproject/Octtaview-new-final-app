@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:octtaviewnew/support/logger.dart';
 import '../../resources/color.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../services/capitalamount_service.dart';
 
 class withdrawalpage extends StatefulWidget {
   const withdrawalpage({super.key});
@@ -10,6 +14,41 @@ class withdrawalpage extends StatefulWidget {
 }
 
 class _withdrawalpageState extends State<withdrawalpage> {
+
+  var userid;
+  var capitaldata;
+  bool _isLoading = true;
+
+  Future _Capitaldetails() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userid = prefs.getString('userid');
+    var response = await CapitalService.Capitaldata();
+    log.i('Capital data List.. $response');
+    setState(() {
+      capitaldata = response;
+
+    });
+  }
+
+  Future _initLoad() async {
+    await Future.wait(
+      [
+        _Capitaldetails()
+      ],
+    );
+    _isLoading = false;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _initLoad();
+    });
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +57,11 @@ class _withdrawalpageState extends State<withdrawalpage> {
         backgroundColor: sevensgbg,
         title: Text("Capital Amount", style: TextStyle(color: yellow2, fontSize: 18)),
       ),
-      body: Column(
+      body:  _isLoading
+          ?  Center(
+          child:CircularProgressIndicator()
+      )
+          :Column(
 
         children: [
           SizedBox(height: 10,),
@@ -52,7 +95,7 @@ class _withdrawalpageState extends State<withdrawalpage> {
                           SizedBox(height: 10,),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 10,),
-                            child: Text("₹100.00",style: TextStyle(color: textcolor2,fontSize: 20,fontWeight: FontWeight.w700),),
+                            child: Text(capitaldata['totalCapitalAmount'].toString(),style: TextStyle(color: textcolor2,fontSize: 20,fontWeight: FontWeight.w700),),
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 10,),
@@ -137,7 +180,7 @@ class _withdrawalpageState extends State<withdrawalpage> {
 
           Expanded(
             child: ListView.builder(
-                itemCount: 5,
+                itemCount:  capitaldata['capitalWithdrawHistory'].length,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
@@ -149,7 +192,7 @@ class _withdrawalpageState extends State<withdrawalpage> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Occt123",style: TextStyle(color: bg1,fontSize: 10),),
+                                Text(capitaldata['capitalWithdrawHistory'][index]['tnxID'],style: TextStyle(color: bg1,fontSize: 10),),
 
                               ],
                             ),
@@ -169,7 +212,7 @@ class _withdrawalpageState extends State<withdrawalpage> {
                                       color: greendark,
                                       borderRadius: BorderRadius.all(Radius.circular(10))
                                   ),
-                                  child: Center(child: Text("Pending",style: TextStyle(fontSize: 7,color: bg1),)),
+                                  child: Center(child: Text(capitaldata['capitalWithdrawHistory'][index]['status'],style: TextStyle(fontSize: 7,color: bg1),)),
                                 ),
 
                               ],
@@ -180,7 +223,7 @@ class _withdrawalpageState extends State<withdrawalpage> {
 
                         Align(
                             alignment:Alignment.topLeft,
-                            child: Text("26 October 2023 10:30 PM",style: TextStyle(color: btnttext,fontSize: 9),))
+                            child: Text(capitaldata['capitalWithdrawHistory'][index]['createdAt'],style: TextStyle(color: btnttext,fontSize: 9),))
                       ],
                     ),
                   );

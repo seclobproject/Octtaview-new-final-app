@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:octtaviewnew/screens/wallet/widgets/addwallet_amount.dart';
 import '../../resources/color.dart';
+import '../../services/wallet_service.dart';
+import '../../support/logger.dart';
 
 class walletpage extends StatefulWidget {
   const walletpage({super.key});
@@ -11,6 +14,40 @@ class walletpage extends StatefulWidget {
 }
 
 class _walletpageState extends State<walletpage> {
+
+  var userid;
+  var walletdata;
+  bool _isLoading = true;
+
+  Future _Walletdetails() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userid = prefs.getString('userid');
+    var response = await WalletService.WalletServiceData();
+    log.i('Wallet data List.. $response');
+    setState(() {
+      walletdata = response;
+    });
+  }
+
+  Future _initLoad() async {
+    await Future.wait(
+      [
+        _Walletdetails()
+      ],
+    );
+    _isLoading = false;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _initLoad();
+    });
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -19,7 +56,11 @@ class _walletpageState extends State<walletpage> {
         backgroundColor: sevensgbg,
         title: Text("Wallet", style: TextStyle(color: yellow2, fontSize: 18)),
       ),
-      body: Column(
+      body:   _isLoading
+          ?  Center(
+          child:CircularProgressIndicator()
+      )
+          :Column(
 
         children: [
           SizedBox(height: 10,),
@@ -49,9 +90,13 @@ class _walletpageState extends State<walletpage> {
                             padding: EdgeInsets.symmetric(horizontal: 10,),
                             child: Text("Wallet Amount",style: TextStyle(color: bg1,fontSize: 10),),
                           ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10,),
-                            child: Text("₹100.00",style: TextStyle(color: textcolor2,fontSize: 20,fontWeight: FontWeight.w700),),
+                          Container(
+                            width: 100,
+                            height: 30,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 10,),
+                              child: Text(walletdata['walletAmount'].toString(),style: TextStyle(color: textcolor2,fontSize: 20,fontWeight: FontWeight.w700),),
+                            ),
                           ),
                         ],
                       ),
@@ -66,7 +111,7 @@ class _walletpageState extends State<walletpage> {
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 10,),
-                            child: Text("₹50.00",style: TextStyle(color: textcolor2,fontSize: 20,fontWeight: FontWeight.w700),),
+                            child: Text(walletdata['totalRefferalAmount'].toString(),style: TextStyle(color: textcolor2,fontSize: 20,fontWeight: FontWeight.w700),),
                           ),
                         ],
                       ),
@@ -81,7 +126,7 @@ class _walletpageState extends State<walletpage> {
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 10,),
-                            child: Text("₹0.2",style: TextStyle(color: textcolor2,fontSize: 20,fontWeight: FontWeight.w700),),
+                            child: Text(walletdata['totalDailyBonus'].toString(),style: TextStyle(color: textcolor2,fontSize: 20,fontWeight: FontWeight.w700),),
                           ),
                         ],
                       ),
@@ -160,7 +205,7 @@ class _walletpageState extends State<walletpage> {
 
           Expanded(
             child: ListView.builder(
-                itemCount: 5,
+                itemCount: walletdata['walletWithdrawHistory'].length,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
@@ -195,8 +240,8 @@ class _walletpageState extends State<walletpage> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Occt123",style: TextStyle(color: bg1,fontSize: 10),),
-                                Text("Faizy",style: TextStyle(color: bg1,fontSize: 10)),
+                                Text(walletdata['walletWithdrawHistory'][index]['tnxID'],style: TextStyle(color: bg1,fontSize: 10),),
+                                Text(walletdata['walletWithdrawHistory'][index]['reportName'],style: TextStyle(color: bg1,fontSize: 10)),
                               ],
                             ),
 
@@ -206,7 +251,7 @@ class _walletpageState extends State<walletpage> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("₹500",style: TextStyle(color: bg1,fontSize: 17),),
+                                Text(walletdata['walletWithdrawHistory'][index]['withdrawAmount'].toString(),style: TextStyle(color: bg1,fontSize: 17),),
 
                                 Container(
                                   height: 12,
@@ -219,7 +264,7 @@ class _walletpageState extends State<walletpage> {
                                       ),
                                     borderRadius: BorderRadius.all(Radius.circular(5))
                                   ),
-                                  child: Center(child: Text("Pending",style: TextStyle(fontSize: 7,color: bg1),)),
+                                  child: Center(child: Text(walletdata['walletWithdrawHistory'][index]['status'],style: TextStyle(fontSize: 7,color: bg1),)),
                                 ),
 
 
@@ -234,7 +279,7 @@ class _walletpageState extends State<walletpage> {
                         
                         Align(
                             alignment:Alignment.topLeft,
-                            child: Text("26 October 2023 10:30 PM",style: TextStyle(color: btnttext,fontSize: 9),))
+                            child: Text(walletdata['walletWithdrawHistory'][index]['createdAt'],style: TextStyle(color: btnttext,fontSize: 9),))
                       ],
                     ),
                   );

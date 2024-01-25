@@ -32,7 +32,7 @@ class _BottomnavState extends State<Bottomnav> {
 
   final List<Map<String, Object>> _pages = [
     {'page': homepage(), 'title': 'Home'},
-    {'page': memberpage(), 'title': 'Members'},
+    {'page': membertabpage(), 'title': 'Members'},
     {'page': reportpage(), 'title': 'Report'},
     {'page': walletpage(), 'title': 'Wallet'},
     {'page': withdrawalpage(), 'title': 'Capital Amount '},
