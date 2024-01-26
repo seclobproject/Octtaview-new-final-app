@@ -15,6 +15,12 @@ class MemberService {
     }
   }
 
+  static Future memberslistinginner(id) async {
+    var dio = await DioHelper.getInstance();
+    var response = await dio.get('$baseURL/api/user/view-childs?id=$id');
+    return response;
+  }
+
 
   static Future addmember(data) async {
     try {

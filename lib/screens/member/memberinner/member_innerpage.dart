@@ -4,56 +4,60 @@ import '../../../resources/color.dart';
 import '../../../services/member_service.dart';
 import '../../../support/logger.dart';
 import '../addmember/add_member.dart';
-import '../memberinner/member_innerpage.dart';
 
 
-class memberpage extends StatefulWidget {
-  const memberpage({super.key});
+class memberinnerpage extends StatefulWidget {
+  memberinnerpage({super.key,required this.id});
+
+  String? id;
 
   @override
-  State<memberpage> createState() => _memberpageState();
+  State<memberinnerpage> createState() => _memberinnerpageState();
 }
 
-class _memberpageState extends State<memberpage> {
+class _memberinnerpageState extends State<memberinnerpage> {
 
 
-  var userid;
-  var memberdata;
+  String userId='';
+
+
   bool _isLoading = true;
+  var membersinnerpage;
 
-  Future _Memberdetails() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    userid = prefs.getString('userid');
-    var response = await MemberService.Getmemberdata();
-    log.i('Home data Show.. $response');
+  Future _memberinner() async {
+    _isLoading=true;
     setState(() {
-      memberdata = response;
+    });
+    membersinnerpage=null;
 
+    var response = await MemberService.memberslistinginner(userId);
+    log.i('Product inner service. $response');
+    setState(() {
+      _isLoading = false;
+      membersinnerpage = response.data;
+      print("ProductInnerpage....$membersinnerpage");
     });
   }
 
-  Future _initLoad() async {
-    await Future.wait(
-      [
-        _Memberdetails()
-      ],
-    );
-    _isLoading = false;
-  }
+
 
   @override
   void initState() {
+    userId=widget.id ??'';
     super.initState();
-    setState(() {
-      _initLoad();
-    });
+    _memberinner();
   }
+
 
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: sevensgbg,
+        title: Text("Member Inner", style: TextStyle(color: yellow2, fontSize: 18)),
+      ),
 
       backgroundColor: sevensgbg,
 
@@ -62,14 +66,12 @@ class _memberpageState extends State<memberpage> {
           child:CircularProgressIndicator()
       )
           :ListView.builder(
-          itemCount: memberdata['child1'].length,
+          itemCount: membersinnerpage['child1'].length,
           itemBuilder: (BuildContext context, int index) {
-            return GestureDetector(
+            return InkWell(
               onTap: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => memberinnerpage(id: memberdata['child1'][index]['_id'],)),
-                );
+                userId=membersinnerpage['child1'][index]['_id'];
+                _memberinner();
               },
               child: Column(
                 children: [
@@ -103,7 +105,7 @@ class _memberpageState extends State<memberpage> {
                                   SizedBox(height: 5,),
                                   Padding(
                                     padding:  EdgeInsets.symmetric(horizontal: 20,),
-                                    child: Text(memberdata['sponserId'],style: TextStyle(color: bg1,fontSize: 10),),
+                                    child: Text(membersinnerpage['sponserId'],style: TextStyle(color: bg1,fontSize: 10),),
                                   ),
                                 ],
                               ),
@@ -118,7 +120,7 @@ class _memberpageState extends State<memberpage> {
                                   SizedBox(height: 5,),
                                   Padding(
                                     padding:  EdgeInsets.symmetric(horizontal: 20,),
-                                    child: Text( memberdata['child1'][index]['username'],style: TextStyle(color: bg1,fontSize: 10),),
+                                    child: Text( membersinnerpage['child1'][index]['username'],style: TextStyle(color: bg1,fontSize: 10),),
                                   ),
                                 ],
                               ),
@@ -144,7 +146,7 @@ class _memberpageState extends State<memberpage> {
                                             end: Alignment.bottomCenter, // Specify the alignment of the gradient (end at the right)
                                           ),
                                         ),
-                                        child: Center(child: Text(memberdata['child1'][index]['packageName'],style: TextStyle(color: btnttext,fontSize: 10),)),
+                                        child: Center(child: Text(membersinnerpage['child1'][index]['packageName'],style: TextStyle(color: btnttext,fontSize: 10),)),
                                       )
                                   ),
                                 ],
@@ -175,7 +177,7 @@ class _memberpageState extends State<memberpage> {
                                     SizedBox(height: 5,),
                                     Container(
                                         width: 100,
-                                        child: Text( memberdata['child1'][index]['address'],style: TextStyle(color: btnttext,fontSize: 10),)),
+                                        child: Text( membersinnerpage['child1'][index]['address'],style: TextStyle(color: btnttext,fontSize: 10),)),
                                   ],
                                 ),
                                 Column(
@@ -183,7 +185,7 @@ class _memberpageState extends State<memberpage> {
                                     SizedBox(height: 10,),
                                     Text("Phone Number",style: TextStyle(color: bg1,fontSize: 10),),
                                     SizedBox(height: 5,),
-                                    Text(memberdata['child1'][index]['phone'].toString(),style: TextStyle(color: btnttext,fontSize: 10),),
+                                    Text(membersinnerpage['child1'][index]['phone'].toString(),style: TextStyle(color: btnttext,fontSize: 10),),
                                   ],
                                 ),
                                 Column(
@@ -194,7 +196,7 @@ class _memberpageState extends State<memberpage> {
                                       child: Text("Email",style: TextStyle(color: bg1,fontSize: 10),),
                                     ),
                                     SizedBox(height: 5,),
-                                    Text(memberdata['child1'][index]['email'],style: TextStyle(color: btnttext,fontSize: 10)),
+                                    Text(membersinnerpage['child1'][index]['email'],style: TextStyle(color: btnttext,fontSize: 10)),
                                   ],
                                 ),
                               ],
