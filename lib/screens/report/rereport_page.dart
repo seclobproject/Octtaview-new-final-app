@@ -17,27 +17,23 @@ class _reportpageState extends State<reportpage> {
   String? selectedValue1;
 
   var userid;
-  var reportdata;
+  var transationreportdata;
   bool _isLoading = true;
 
-  Future _Reportdetails() async {
-    var reqData = {
-      "reportName":"ROIIncome"
-    };
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    userid = prefs.getString('userid');
-    var response = await ReportService.ReportData(reqData);
-    log.i('Report data List.. $response');
-    setState(() {
-      reportdata = response;
+  var status = 'ROIIncome';
 
+  Future _transationReport(status) async {
+    var response = await ReportService.reportDetails(status);
+    log.i('My Trasation report Details... $response');
+    setState(() {
+      transationreportdata = response;
     });
   }
 
   Future _initLoad() async {
     await Future.wait(
       [
-        _Reportdetails()
+        _transationReport(status)
       ],
     );
     _isLoading = false;
@@ -84,52 +80,153 @@ class _reportpageState extends State<reportpage> {
 
           SizedBox(height: 10,),
 
-          Padding(
-            padding:  EdgeInsets.symmetric(horizontal: 20),
-            child: Container(
-           decoration: BoxDecoration(
-             color: bottomtabclr,
-             borderRadius: BorderRadius.all(Radius.circular(10))
-           ),
-              height: 35,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                    isExpanded: true,
-                    hint: Text(
-                      'Direct Income',
-                      style: TextStyle(
-                        fontSize: 12,
+          // Padding(
+          //   padding:  EdgeInsets.symmetric(horizontal: 20),
+          //   child: Container(
+          //  decoration: BoxDecoration(
+          //    color: bottomtabclr,
+          //    borderRadius: BorderRadius.all(Radius.circular(10))
+          //  ),
+          //     height: 35,
+          //     child: Padding(
+          //       padding: const EdgeInsets.symmetric(horizontal: 20),
+          //       child: DropdownButtonHideUnderline(
+          //         child: DropdownButton<String>(
+          //           isExpanded: true,
+          //           hint: Text(
+          //             'Direct Income',
+          //             style: TextStyle(
+          //               fontSize: 12,
+          //               color: bg1,
+          //             ),
+          //           ),
+          //           items: items
+          //               .map((String item) => DropdownMenuItem<String>(
+          //             value: item,
+          //             child: Text(
+          //               item,
+          //               style: const TextStyle(
+          //                 fontSize: 14,
+          //                 color: btnttext
+          //               ),
+          //             ),
+          //           ))
+          //               .toList(),
+          //           value: selectedValue,
+          //           onChanged: (String? value) {
+          //             setState(() {
+          //               selectedValue = value;
+          //             });
+          //           },
+          //           icon: Icon(
+          //             Icons.arrow_drop_down, // You can use any other icon as needed
+          //             color: bg1
+          //           ),
+          //
+          //           ),
+          //
+          //         ),
+          //     ),
+          //   ),
+          // ),
+
+
+
+          GestureDetector(
+            onTap: (){
+              showDialog<String>(
+                context: context,
+                builder: (BuildContext context) =>
+                    AlertDialog(
+                      title:  Text('Select Data'),
+
+                      content: Container(
                         color: bg1,
-                      ),
-                    ),
-                    items: items
-                        .map((String item) => DropdownMenuItem<String>(
-                      value: item,
-                      child: Text(
-                        item,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: btnttext
+                        height: 150,
+                        child: Column(
+                          children: [
+                            SizedBox(height: 20,),
+                            GestureDetector(
+                              onTap: (){
+                                setState(() {
+                                  status = 'DirectIncome';
+                                  _transationReport(status);
+                                  Navigator.pop(context);
+                                  print(status);
+                                });
+                              },
+                              child: Text(
+                                  'Direct Income'),
+                            ),
+
+                            Divider(),
+                            SizedBox(height: 10,),
+                            GestureDetector(
+                              onTap: (){
+                                status = 'LevelIncome';
+                                _transationReport(status);
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                  'Level Income'),
+                            ),
+                            Divider(),
+                            SizedBox(height: 10,),
+                            GestureDetector(
+                              onTap: (){
+                                status = 'ROIIncome';
+                                _transationReport(status);
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                  'ROI Income'),
+                            ),
+
+                          ],
                         ),
                       ),
-                    ))
-                        .toList(),
-                    value: selectedValue,
-                    onChanged: (String? value) {
-                      setState(() {
-                        selectedValue = value;
-                      });
-                    },
-                    icon: Icon(
-                      Icons.arrow_drop_down, // You can use any other icon as needed
-                      color: bg1
-                    ),
+                      actions: <Widget>[
 
+                        // TextButton(
+                        //   onPressed: () {
+                        //
+                        //     Navigator.pop(context);
+                        //   },
+                        //   child:  Text(
+                        //     'Submit',
+                        //     style: TextStyle(
+                        //         color: greenpermanat),
+                        //   ),
+                        // ),
+                      ],
                     ),
+              );
+            },
 
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Container(
+                height: 40,
+                width: 400,
+                 decoration: BoxDecoration(
+                   color: bottomtabclr,
+                   borderRadius: BorderRadius.all(Radius.circular(10))
+                 ),
+                child: Padding(
+                  padding:  EdgeInsets.symmetric(horizontal: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Filtter",style: TextStyle(color: bg1),),
+                      Icon(
+                        Icons.archive_rounded,
+                        color: bg1,
+                        size: 20.0,
+                        semanticLabel: 'filletr',
+                      ),
+                    ],
                   ),
+                ),
               ),
             ),
           ),
@@ -202,7 +299,7 @@ class _reportpageState extends State<reportpage> {
 
           Expanded(
             child: ListView.builder(
-                itemCount: 5,
+                itemCount: transationreportdata['allTransactions'].length,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding:  EdgeInsets.symmetric(horizontal: 20),
@@ -216,12 +313,21 @@ class _reportpageState extends State<reportpage> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("26 October 2023",style: TextStyle(color: btnttext,fontSize: 10)),
+                                Container(
+                                  width: 70,
+                                  height: 15,
+                                  child: Text(
+                                    transationreportdata['allTransactions'][index]['createdAt'] ?? '',
+                                    style: TextStyle(color: btnttext, fontSize: 10),
+                                  ),
+                                ),
                                 Text("10:30 PM",style: TextStyle(color: btnttext,fontSize: 10)),
                               ],
                             ),
-                            Text("CPIA2XUZ8DJEXRS\nZWFZV1MS82Y",style: TextStyle(color: btnttext,fontSize: 10)),
-                            Text("₹ 101.00",style: TextStyle(color: btnttext,fontSize: 10)),
+                            Text(transationreportdata['allTransactions'][index]['transactionCode'] ?? 'no data',style: TextStyle(color: btnttext,fontSize: 10)),
+                            Container(
+                                width: 100,
+                                child: Text(transationreportdata['allTransactions'][index]['amountCredited'].toString() ?? 'no data',style: TextStyle(color: btnttext,fontSize: 10))),
 
                           ],
                         ),

@@ -16,4 +16,17 @@ class WalletService {
   }
 
 
+
+
+  static Future addwalletamount(data) async {
+    try {
+      var dio = await DioHelper.getInstance();
+      var response = await dio.post('$baseURL/api/user/withdraw-wallet',data: data);
+      return response.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+
 }

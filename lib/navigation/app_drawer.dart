@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../authentication/login.dart';
+import '../commonpage/profile.dart';
 import '../resources/color.dart';
 
 class appdrawer extends StatefulWidget {
@@ -42,6 +43,83 @@ class _appdrawerState extends State<appdrawer> {
           SizedBox(height: 100,),
           InkWell(
             onTap: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const profilepage()),
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      'assets/svg/logout.svg',
+                      fit: BoxFit.cover,
+                    ),
+
+                    SizedBox(width: 15,),
+
+                    Text('Profile',style: TextStyle(fontWeight: FontWeight.w400,fontSize: 13,color: yellow2),)
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+
+          InkWell(
+            onTap: (){
+
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      'assets/svg/logout.svg',
+                      fit: BoxFit.cover,
+                    ),
+
+                    SizedBox(width: 15,),
+
+                    Text('Refer a friend',style: TextStyle(fontWeight: FontWeight.w400,fontSize: 13,color: yellow2),)
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+          InkWell(
+            onTap: (){
+
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      'assets/svg/logout.svg',
+                      fit: BoxFit.cover,
+                    ),
+
+                    SizedBox(width: 15,),
+
+                    Text('Terms & Condition',style: TextStyle(fontWeight: FontWeight.w400,fontSize: 13,color: yellow2),)
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+
+          InkWell(
+            onTap: (){
               logout();
             },
             child: Padding(
@@ -57,7 +135,7 @@ class _appdrawerState extends State<appdrawer> {
 
                     SizedBox(width: 15,),
 
-                    Text('Logout',style: TextStyle(fontWeight: FontWeight.w400,fontSize: 13,color: bg1),)
+                    Text('Logout',style: TextStyle(fontWeight: FontWeight.w400,fontSize: 13,color: yellow2),)
                   ],
                 ),
               ),

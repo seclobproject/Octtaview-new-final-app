@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:octtaviewnew/screens/wallet/widgets/addwallet_amount.dart';
+import '../../navigation/bottom_navigation.dart';
 import '../../resources/color.dart';
 import '../../services/wallet_service.dart';
 import '../../support/logger.dart';
@@ -19,6 +20,12 @@ class _walletpageState extends State<walletpage> {
   var walletdata;
   bool _isLoading = true;
 
+  String? amount;
+  String? transactionPassword;
+  String? walletUrl;
+  bool isButtonDisabled = true;
+
+
   Future _Walletdetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     userid = prefs.getString('userid');
@@ -28,6 +35,97 @@ class _walletpageState extends State<walletpage> {
       walletdata = response;
     });
   }
+
+
+  Future addmoney() async {
+    try {
+      setState(() {});
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      userid = prefs.getString('userid');
+      var reqData = {
+        'amount': amount,
+        'transactionPassword': transactionPassword,
+        'walletUrl': walletUrl,
+      };
+
+      var response = await WalletService.addwalletamount(reqData);
+      log.i('add money  . $response');
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Bottomnav()),
+      );
+    } catch (error) {
+      // Handle specific error cases
+      if (error.toString().contains("Money send failed")) {
+        // Show a SnackBar or AlertDialog to inform the user
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Money send failed'),
+            duration: Duration(seconds: 3),
+          ),
+        );
+      } else {
+        // Handle other errors or rethrow them if not handled here
+        throw ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Internal Server Error'),
+            duration: Duration(seconds: 3),
+          ),
+        );
+      }
+    }
+  }
+
+
+  void updateButtonState() {
+    setState(() {
+      isButtonDisabled = transactionPassword == null ||
+          amount == null;
+
+    });
+  }
+
+  bool validateForm() {
+
+
+    if (transactionPassword == null || transactionPassword!.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please enter a valid transactionPassword'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return false;
+    }
+
+    if (amount == null || amount!.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please enter a valid amount number'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return false;
+    }
+
+    if (walletUrl == null || walletUrl!.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please enter a valid walletUrl'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return false;
+    }
+
+
+
+    return true;
+  }
+
+
+
 
   Future _initLoad() async {
     await Future.wait(
