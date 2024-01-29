@@ -16,4 +16,25 @@ class ProfileService {
   }
 
 
+  static Future changepassword(data) async {
+    try {
+      var dio = await DioHelper.getInstance();
+      var response = await dio.post('$baseURL/api/user/change-password',data: data);
+      return response.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future changetransactionpassword(data) async {
+    try {
+      var dio = await DioHelper.getInstance();
+      var response = await dio.post('$baseURL/api/user/change-tnx-password',data: data);
+      return response.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+
 }

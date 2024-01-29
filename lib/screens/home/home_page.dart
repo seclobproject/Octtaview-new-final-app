@@ -8,6 +8,7 @@ import '../../navigation/app_drawer.dart';
 import '../../resources/color.dart';
 import '../../services/home_service.dart';
 import '../../support/logger.dart';
+import 'package:share_plus/share_plus.dart';
 
 class homepage extends StatefulWidget {
   const homepage({super.key});
@@ -95,7 +96,7 @@ class _homepageState extends State<homepage> {
                     children: [
                       InkWell(
                         onTap: () {
-                          // Share.share("https://sevensquaregroup.in/referral/$userid");
+                          Share.share("https://octtaview.com/referal?id=6594f7921e76536671778ff7/$userid");
                         },
                         child:  Container(
                           height: 35,
@@ -384,7 +385,10 @@ class _homepageState extends State<homepage> {
                           Column(
                             children: [
                               Text("ROI Income ",style: TextStyle(color: bg1,fontSize: 14,fontWeight: FontWeight.w700)),
-                              Text(homedata?['levelRoi'].toString() ?? '0',style: TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),),
+                              Container(
+                                  height: 20,
+                                  width: 70,
+                                  child: Text(homedata?['levelRoi'].toString() ?? '0',style: TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),)),
                             ],
                           ),
 
@@ -399,7 +403,10 @@ class _homepageState extends State<homepage> {
                               Column(
                                 children: [
                                   Text("Level Income",style: TextStyle(color: bg1,fontSize: 14,fontWeight: FontWeight.w700)),
-                                  Text(homedata?['levelRoi'].toString() ?? '0',style: TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),),
+                                  Container(
+                                      height: 20,
+                                      width: 70,
+                                      child: Text(homedata?['levelRoi'].toString() ?? '0',style: TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),)),
                                 ],
                               ),
 
@@ -409,11 +416,6 @@ class _homepageState extends State<homepage> {
                         ],
                       ),
                     ),
-
-
-
-
-
 
                   ],
                 ),

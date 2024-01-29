@@ -45,6 +45,7 @@ dev_dependencies:
   shared_preferences: ^2.2.2
   dio: ^5.3.3
   logger: ^1.1.0
+  share_plus: ^7.2.1
 
 
   # The "flutter_lints" package below contains a set of recommended lints to

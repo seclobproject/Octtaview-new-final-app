@@ -7,6 +7,8 @@ import '../support/logger.dart';
 
 import 'package:flutter_svg/svg.dart';
 
+import 'change_password.dart';
+
 
 class profilepage extends StatefulWidget {
   const profilepage({super.key});
@@ -132,10 +134,10 @@ class _profilepageState extends State<profilepage> {
 
                   InkWell(
                     onTap: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => const forgottpassword()),
-                      // );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const changepassword()),
+                      );
                     },
                     child: Padding(
                       padding:  EdgeInsets.symmetric(horizontal: 20),

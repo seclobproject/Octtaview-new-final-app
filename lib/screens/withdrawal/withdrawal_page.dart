@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:octtaviewnew/screens/withdrawal/widgets/capital_amount_withdrawal.dart';
 import 'package:octtaviewnew/support/logger.dart';
 import '../../resources/color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -99,7 +100,7 @@ class _withdrawalpageState extends State<withdrawalpage> {
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 10,),
-                            child: Text("withdrawal of capital amount\nonly after 90 days",style: TextStyle(color: btnttext,fontSize: 7),),
+                            child: Text("withdrawal of capital amount\nonly after 90 days",style: TextStyle(color: btnttext,fontSize: 8),),
                           ),
                         ],
                       ),
@@ -111,47 +112,52 @@ class _withdrawalpageState extends State<withdrawalpage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(height: 35,),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10,),
-                            child:  Container(
-                              height: 15,
-                              // width: 120,
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: [yellow, yellow2], // Specify your gradient colors
-                                    begin: Alignment.topCenter, // Specify the alignment of the gradient (start from the left)
-                                    end: Alignment.bottomCenter, // Specify the alignment of the gradient (end at the right)
-                                  ),
-                                  borderRadius: BorderRadius.all(Radius.circular(10))
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 5),
-                                child: Row(
-                                  children: [
-                                    Text("Request withdrawal money",style: TextStyle(fontSize: 7,color: btnttext),),
-                                    SizedBox(width: 5,),
-                                    Container(
-                                      height: 15,
-                                      width: 15,
-                                      decoration: BoxDecoration(
-                                          color: textcolor2,
-                                          borderRadius: BorderRadius.all(Radius.circular(100))
-                                      ),
-                                      child: Icon(
-                                        Icons.arrow_drop_down_outlined,
-                                        color: bg1,
-                                        size: 14,
-                                      ),
+                          InkWell(
+                            onTap: (){
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => capitalamountwithdrawals()));
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 10,),
+                              child:  Container(
+                                height: 20,
+                                // width: 120,
+                                decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [yellow, yellow2], // Specify your gradient colors
+                                      begin: Alignment.topCenter, // Specify the alignment of the gradient (start from the left)
+                                      end: Alignment.bottomCenter, // Specify the alignment of the gradient (end at the right)
                                     ),
-                                  ],
+                                    borderRadius: BorderRadius.all(Radius.circular(10))
                                 ),
-                              ),
-                            )
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                                  child: Row(
+                                    children: [
+                                      Text("Request withdrawal money",style: TextStyle(fontSize: 8,color: btnttext),),
+                                      SizedBox(width: 5,),
+                                      Container(
+                                        height: 15,
+                                        width: 15,
+                                        decoration: BoxDecoration(
+                                            color: textcolor2,
+                                            borderRadius: BorderRadius.all(Radius.circular(100))
+                                        ),
+                                        child: Icon(
+                                          Icons.arrow_drop_down_outlined,
+                                          color: bg1,
+                                          size: 14,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ),
                           ),
                           SizedBox(height: 25,),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 10,),
-                            child: Text("Submit the request, and within  48\nhour,the funds were credited to \nyour account",style: TextStyle(color: btnttext,fontSize: 7,),),
+                            child: Text("Submit the request, and within  48\nhour,the funds were credited to \nyour account",style: TextStyle(color: btnttext,fontSize: 8,),),
                           ),
                         ],
                       ),

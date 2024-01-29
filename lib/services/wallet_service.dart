@@ -16,8 +16,6 @@ class WalletService {
   }
 
 
-
-
   static Future addwalletamount(data) async {
     try {
       var dio = await DioHelper.getInstance();

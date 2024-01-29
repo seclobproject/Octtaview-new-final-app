@@ -26,5 +26,16 @@ class CapitalService {
   }
 
 
+  static Future capitalamountwithdrawal(data) async {
+    try {
+      var dio = await DioHelper.getInstance();
+      var response = await dio.post('$baseURL/api/user/withdraw-capital',data: data);
+      return response.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+
 
 }
