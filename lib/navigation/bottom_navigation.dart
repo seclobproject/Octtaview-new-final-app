@@ -35,7 +35,7 @@ class _BottomnavState extends State<Bottomnav> {
     {'page': membertabpage(), 'title': 'Members'},
     {'page': reportpage(), 'title': 'Report'},
     {'page': walletpage(), 'title': 'Wallet'},
-    {'page': withdrawalpage(), 'title': 'Capital Amount '},
+    {'page': withdrawalpage(), 'title': 'Withdrawal'},
   ];
 
   void _selectPage(int index) {
@@ -119,7 +119,7 @@ class _BottomnavState extends State<Bottomnav> {
                       color: (_selectedPageIndex == 4) ? btnttext : null,
                     ),
                   ),
-                  label: 'Capital Amount ',
+                  label: 'Capital',
                 ),
               ],
             ),

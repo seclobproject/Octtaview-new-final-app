@@ -6,6 +6,7 @@ import '../../resources/color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../services/capitalamount_service.dart';
+import '../../services/profile_service.dart';
 
 class withdrawalpage extends StatefulWidget {
   const withdrawalpage({super.key});
@@ -19,6 +20,21 @@ class _withdrawalpageState extends State<withdrawalpage> {
   var userid;
   var capitaldata;
   bool _isLoading = true;
+  var profilelist;
+
+
+
+
+  Future _profileapi() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userid = prefs.getString('userid');
+    var response = await ProfileService.ProfilePage();
+    log.i('profile data Show.. $response');
+    setState(() {
+      profilelist = response;
+
+    });
+  }
 
   Future _Capitaldetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -34,7 +50,8 @@ class _withdrawalpageState extends State<withdrawalpage> {
   Future _initLoad() async {
     await Future.wait(
       [
-        _Capitaldetails()
+        _Capitaldetails(),
+        _profileapi()
       ],
     );
     _isLoading = false;
@@ -59,8 +76,45 @@ class _withdrawalpageState extends State<withdrawalpage> {
         title: Text("Capital Amount", style: TextStyle(color: yellow2, fontSize: 18)),
       ),
       body:  _isLoading
-          ?  Center(
-          child:CircularProgressIndicator()
+          ? Center(
+        child: CircularProgressIndicator(),
+      )
+          : (capitaldata['userStatus'] == "pending" && capitaldata.isEmpty)
+          ? Center(
+        child: Column(
+          children: [
+            SizedBox(height: 150,),
+            SvgPicture.asset(
+              'assets/svg/noactivation.svg',
+              height: 200,
+            ),
+            SizedBox(height: 10,),
+
+            Text("Activation\nPending..!!",
+              style: TextStyle(color: bg1,fontSize: 25,fontWeight: FontWeight.w700),)
+          ],
+        ),
+      )
+          : (capitaldata['userStatus'] == "pending")
+          ? Center(
+        child: Text(
+          "User status is pending.",
+          style: TextStyle(color: Colors.red),
+        ),
+      )
+          : (capitaldata.isEmpty)
+          ? Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/logo/nouser.png',
+              height: 100,
+            ),
+            SizedBox(height: 10,),
+            Text("No User Found !",style: TextStyle(color: bg1,fontSize: 20,fontWeight: FontWeight.w700),)
+          ],
+        ),
       )
           :Column(
 

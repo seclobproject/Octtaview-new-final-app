@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../resources/color.dart';
+import '../../services/profile_service.dart';
 import '../../services/report_service.dart';
 import '../../support/logger.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
 
 class reportpage extends StatefulWidget {
   const reportpage({super.key});
@@ -20,10 +23,14 @@ class _reportpageState extends State<reportpage> {
   var transationreportdata;
   bool _isLoading = true;
 
+  var profilelist;
   var status = 'ROIIncome';
 
-  Future _transationReport(status) async {
-    var response = await ReportService.reportDetails(status);
+
+
+
+  Future _transationReport() async {
+    var response = await ReportService.reportDetails();
     log.i('My Trasation report Details... $response');
     setState(() {
       transationreportdata = response;
@@ -33,7 +40,7 @@ class _reportpageState extends State<reportpage> {
   Future _initLoad() async {
     await Future.wait(
       [
-        _transationReport(status)
+        _transationReport(),
       ],
     );
     _isLoading = false;
@@ -71,9 +78,46 @@ class _reportpageState extends State<reportpage> {
         backgroundColor: sevensgbg,
         title: Text("Report", style: TextStyle(color: yellow2, fontSize: 18)),
       ),
-      body:   _isLoading
-          ?  Center(
-          child:CircularProgressIndicator()
+      body: _isLoading
+          ? Center(
+        child: CircularProgressIndicator(),
+      )
+          : (transationreportdata['userStatus'] == "pending" && transationreportdata.isEmpty)
+          ? Center(
+        child: Column(
+          children: [
+            SizedBox(height: 150,),
+            SvgPicture.asset(
+              'assets/svg/noactivation.svg',
+              height: 200,
+            ),
+            SizedBox(height: 10,),
+
+            Text("Activation\nPending..!!",
+              style: TextStyle(color: bg1,fontSize: 25,fontWeight: FontWeight.w700),)
+          ],
+        ),
+      )
+          : (transationreportdata['userStatus'] == "pending")
+          ? Center(
+        child: Text(
+          "User status is pending.",
+          style: TextStyle(color: Colors.red),
+        ),
+      )
+          : (transationreportdata.isEmpty)
+          ? Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/logo/nouser.png',
+              height: 100,
+            ),
+            SizedBox(height: 10,),
+            Text("No User Found !",style: TextStyle(color: bg1,fontSize: 20,fontWeight: FontWeight.w700),)
+          ],
+        ),
       )
           :Column(
         children: [
@@ -132,104 +176,104 @@ class _reportpageState extends State<reportpage> {
 
 
 
-          GestureDetector(
-            onTap: (){
-              showDialog<String>(
-                context: context,
-                builder: (BuildContext context) =>
-                    AlertDialog(
-                      title:  Text('Select Data'),
-
-                      content: Container(
-                        color: bg1,
-                        height: 150,
-                        child: Column(
-                          children: [
-                            SizedBox(height: 20,),
-                            GestureDetector(
-                              onTap: (){
-                                setState(() {
-                                  status = 'DirectIncome';
-                                  _transationReport(status);
-                                  Navigator.pop(context);
-                                  print(status);
-                                });
-                              },
-                              child: Text(
-                                  'Direct Income'),
-                            ),
-
-                            Divider(),
-                            SizedBox(height: 10,),
-                            GestureDetector(
-                              onTap: (){
-                                status = 'LevelIncome';
-                                _transationReport(status);
-                                Navigator.pop(context);
-                              },
-                              child: Text(
-                                  'Level Income'),
-                            ),
-                            Divider(),
-                            SizedBox(height: 10,),
-                            GestureDetector(
-                              onTap: (){
-                                status = 'ROIIncome';
-                                _transationReport(status);
-                                Navigator.pop(context);
-                              },
-                              child: Text(
-                                  'ROI Income'),
-                            ),
-
-                          ],
-                        ),
-                      ),
-                      actions: <Widget>[
-
-                        // TextButton(
-                        //   onPressed: () {
-                        //
-                        //     Navigator.pop(context);
-                        //   },
-                        //   child:  Text(
-                        //     'Submit',
-                        //     style: TextStyle(
-                        //         color: greenpermanat),
-                        //   ),
-                        // ),
-                      ],
-                    ),
-              );
-            },
-
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
-                height: 40,
-                width: 400,
-                 decoration: BoxDecoration(
-                   color: bottomtabclr,
-                   borderRadius: BorderRadius.all(Radius.circular(10))
-                 ),
-                child: Padding(
-                  padding:  EdgeInsets.symmetric(horizontal: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Filtter",style: TextStyle(color: bg1),),
-                      Icon(
-                        Icons.archive_rounded,
-                        color: bg1,
-                        size: 20.0,
-                        semanticLabel: 'filletr',
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
+          // GestureDetector(
+          //   onTap: (){
+          //     showDialog<String>(
+          //       context: context,
+          //       builder: (BuildContext context) =>
+          //           AlertDialog(
+          //             title:  Text('Select Data'),
+          //
+          //             content: Container(
+          //               color: bg1,
+          //               height: 150,
+          //               child: Column(
+          //                 children: [
+          //                   SizedBox(height: 20,),
+          //                   GestureDetector(
+          //                     onTap: (){
+          //                       setState(() {
+          //                         status = 'DirectIncome';
+          //                         _transationReport();
+          //                         Navigator.pop(context);
+          //                         print(status);
+          //                       });
+          //                     },
+          //                     child: Text(
+          //                         'Direct Income'),
+          //                   ),
+          //
+          //                   Divider(),
+          //                   SizedBox(height: 10,),
+          //                   GestureDetector(
+          //                     onTap: (){
+          //                       status = 'LevelIncome';
+          //                       _transationReport(status);
+          //                       Navigator.pop(context);
+          //                     },
+          //                     child: Text(
+          //                         'Level Income'),
+          //                   ),
+          //                   Divider(),
+          //                   SizedBox(height: 10,),
+          //                   GestureDetector(
+          //                     onTap: (){
+          //                       status = 'ROIIncome';
+          //                       _transationReport(status);
+          //                       Navigator.pop(context);
+          //                     },
+          //                     child: Text(
+          //                         'ROI Income'),
+          //                   ),
+          //
+          //                 ],
+          //               ),
+          //             ),
+          //             actions: <Widget>[
+          //
+          //               // TextButton(
+          //               //   onPressed: () {
+          //               //
+          //               //     Navigator.pop(context);
+          //               //   },
+          //               //   child:  Text(
+          //               //     'Submit',
+          //               //     style: TextStyle(
+          //               //         color: greenpermanat),
+          //               //   ),
+          //               // ),
+          //             ],
+          //           ),
+          //     );
+          //   },
+          //
+          //   child: Padding(
+          //     padding: const EdgeInsets.symmetric(horizontal: 20),
+          //     child: Container(
+          //       height: 40,
+          //       width: 400,
+          //        decoration: BoxDecoration(
+          //          color: bottomtabclr,
+          //          borderRadius: BorderRadius.all(Radius.circular(10))
+          //        ),
+          //       child: Padding(
+          //         padding:  EdgeInsets.symmetric(horizontal: 20),
+          //         child: Row(
+          //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //           children: [
+          //             Text("Filtter",style: TextStyle(color: bg1),),
+          //             Icon(
+          //               Icons.archive_rounded,
+          //               color: bg1,
+          //               size: 20.0,
+          //               semanticLabel: 'filletr',
+          //             ),
+          //           ],
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
 
           // SizedBox(height: 10,),
           //
@@ -299,7 +343,7 @@ class _reportpageState extends State<reportpage> {
 
           Expanded(
             child: ListView.builder(
-                itemCount: transationreportdata['allTransactions'].length,
+                itemCount: transationreportdata['directIncome'].length,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding:  EdgeInsets.symmetric(horizontal: 20),
@@ -317,17 +361,17 @@ class _reportpageState extends State<reportpage> {
                                   width: 70,
                                   height: 15,
                                   child: Text(
-                                    transationreportdata['allTransactions'][index]['createdAt'] ?? '',
+                                    transationreportdata['directIncome'][index]['createdAt'] ?? '',
                                     style: TextStyle(color: btnttext, fontSize: 10),
                                   ),
                                 ),
                                 Text("10:30 PM",style: TextStyle(color: btnttext,fontSize: 10)),
                               ],
                             ),
-                            Text(transationreportdata['allTransactions'][index]['transactionCode'] ?? 'no data',style: TextStyle(color: btnttext,fontSize: 10)),
+                            Text(transationreportdata['directIncome'][index]['transactionCode'] ?? 'no data',style: TextStyle(color: btnttext,fontSize: 10)),
                             Container(
                                 width: 100,
-                                child: Text(transationreportdata['allTransactions'][index]['amountCredited'].toString() ?? 'no data',style: TextStyle(color: btnttext,fontSize: 10))),
+                                child: Text(transationreportdata['directIncome'][index]['amountCredited'].toString() ?? 'no data',style: TextStyle(color: btnttext,fontSize: 10))),
 
                           ],
                         ),

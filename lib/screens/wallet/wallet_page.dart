@@ -4,8 +4,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:octtaviewnew/screens/wallet/widgets/addwallet_amount.dart';
 import '../../navigation/bottom_navigation.dart';
 import '../../resources/color.dart';
+import '../../services/profile_service.dart';
 import '../../services/wallet_service.dart';
 import '../../support/logger.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
 
 class walletpage extends StatefulWidget {
   const walletpage({super.key});
@@ -18,6 +21,7 @@ class _walletpageState extends State<walletpage> {
 
   var userid;
   var walletdata;
+  var profilelist;
   bool _isLoading = true;
 
   String? amount;
@@ -36,6 +40,18 @@ class _walletpageState extends State<walletpage> {
     });
   }
 
+
+
+  Future _profileapi() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userid = prefs.getString('userid');
+    var response = await ProfileService.ProfilePage();
+    log.i('profile data Show.. $response');
+    setState(() {
+      profilelist = response;
+
+    });
+  }
 
   Future addmoney() async {
     try {
@@ -130,7 +146,8 @@ class _walletpageState extends State<walletpage> {
   Future _initLoad() async {
     await Future.wait(
       [
-        _Walletdetails()
+        _Walletdetails(),
+        _profileapi()
       ],
     );
     _isLoading = false;
@@ -154,9 +171,46 @@ class _walletpageState extends State<walletpage> {
         backgroundColor: sevensgbg,
         title: Text("Wallet", style: TextStyle(color: yellow2, fontSize: 18)),
       ),
-      body:   _isLoading
-          ?  Center(
-          child:CircularProgressIndicator()
+      body:  _isLoading
+          ? Center(
+        child: CircularProgressIndicator(),
+      )
+          : (walletdata['userStatus'] == "pending" && walletdata.isEmpty)
+          ? Center(
+        child: Column(
+          children: [
+            SizedBox(height: 150,),
+            SvgPicture.asset(
+              'assets/svg/noactivation.svg',
+              height: 200,
+            ),
+            SizedBox(height: 10,),
+
+            Text("Activation\nPending..!!",
+              style: TextStyle(color: bg1,fontSize: 25,fontWeight: FontWeight.w700),)
+          ],
+        ),
+      )
+          : (walletdata['userStatus'] == "pending")
+          ? Center(
+        child: Text(
+          "User status is pending.",
+          style: TextStyle(color: Colors.red),
+        ),
+      )
+          : (walletdata.isEmpty)
+          ? Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/logo/nouser.png',
+              height: 100,
+            ),
+            SizedBox(height: 10,),
+            Text("No User Found !",style: TextStyle(color: bg1,fontSize: 20,fontWeight: FontWeight.w700),)
+          ],
+        ),
       )
           :Column(
 

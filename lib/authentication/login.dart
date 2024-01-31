@@ -146,9 +146,11 @@ class _loginpageState extends State<loginpage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: TextField(
+              obscureText: hidePassword,
               decoration: InputDecoration(
                 hintText: 'Enter your password',
                 hintStyle: TextStyle(color: yellow),
+
                 contentPadding: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -157,6 +159,16 @@ class _loginpageState extends State<loginpage> {
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   borderSide: BorderSide(color: yellow),
+                ),
+                suffixIcon: IconButton(
+                  icon: hidePassword
+                      ? Icon(Icons.visibility_off)
+                      : Icon(Icons.visibility),
+                  onPressed: () {
+                    setState(() {
+                      hidePassword = !hidePassword;
+                    });
+                  },
                 ),
 
               ),

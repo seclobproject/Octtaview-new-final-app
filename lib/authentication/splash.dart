@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import '../resources/color.dart';
 import 'LandingPage.dart';
 import 'login.dart';
-
+import 'package:page_transition/page_transition.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 
 
 class MyHomePage extends StatefulWidget {
@@ -15,7 +16,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     Timer(
-        Duration(seconds: 2),
+        Duration(seconds: 3),
             () => Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -26,15 +27,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: sevensgbg,
-      body: Center(
-        child: Image.asset(
-          'assets/logo/logooctavia.png',
-          width: 350, // Set the desired width
-          height: 350, // Set the desired height
+    return AnimatedSplashScreen(
+        duration: 5000,
+        splashIconSize: 350,
+        splash: 'assets/logo/logooctavia.png',
+        nextScreen: Landing_Page(
+            title: 'landingpage'
         ),
-      ),
-    );
+        splashTransition: SplashTransition.fadeTransition,
+        pageTransitionType: PageTransitionType.scale,
+        backgroundColor: sevensgbg);
   }
 }

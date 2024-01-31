@@ -55,6 +55,7 @@ class _homepageState extends State<homepage> {
 
 
 
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -142,12 +143,323 @@ class _homepageState extends State<homepage> {
 
             ),
 
+            // SizedBox(height: 20,),
+            //
+            // GestureDetector(
+            //   onTap: (){
+            //     Navigator.of(context).push(MaterialPageRoute(builder: (context) => verificationpage()));
+            //   },
+            //   child: Container(
+            //     height: 35,
+            //     width: 220,
+            //     decoration:BoxDecoration(
+            //       borderRadius: BorderRadius.all(
+            //           Radius.circular(10)
+            //       ),
+            //       gradient: LinearGradient(
+            //         colors: [yellow, yellow2], // Specify your gradient colors
+            //         begin: Alignment.topCenter, // Specify the alignment of the gradient (start from the left)
+            //         end: Alignment.bottomCenter, // Specify the alignment of the gradient (end at the right)
+            //       ),
+            //     ),
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.center,
+            //       children: [
+            //         Text("Verification Pending",style: TextStyle(color: btnttext),),
+            //
+            //         SizedBox(width: 10),
+            //
+            //         SvgPicture.asset(
+            //           'assets/svg/timeicon.svg',
+            //           width: 18,
+            //           height: 18,
+            //         ),
+            //
+            //       ],
+            //     ),
+            //
+            //   ),
+            // ),
+            //
             SizedBox(height: 20,),
 
+
+
+            homedata['userStatus'] == "pending" ?
             GestureDetector(
-              onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => verificationpage()));
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>  verificationpage()),
+                );
               },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Container(
+                  height: 35,
+                  width: 220,
+                  decoration:BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                        Radius.circular(10)
+                    ),
+                    gradient: LinearGradient(
+                      colors: [yellow, yellow2], // Specify your gradient colors
+                      begin: Alignment.topCenter, // Specify the alignment of the gradient (start from the left)
+                      end: Alignment.bottomCenter, // Specify the alignment of the gradient (end at the right)
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Verification Pending",style: TextStyle(color: btnttext),),
+
+                      SizedBox(width: 10),
+
+                      SvgPicture.asset(
+                        'assets/svg/timeicon.svg',
+                        width: 18,
+                        height: 18,
+                      ),
+
+                    ],
+                  ),
+
+                ),
+              ),
+            ) :
+
+            //   profilepageapi['userStatus'] == "progress" ?
+            //
+            //   Text(
+            //     "Verification In Progress",
+            //     style: TextStyle(
+            //       color: yellow, // Set the desired color for accepted status text
+            //       fontSize: 20,
+            //       fontWeight: FontWeight.bold,
+            //     ),
+            //   ) :
+            //   Padding(
+            //     padding: const EdgeInsets.symmetric(horizontal: 20),
+            //     child: Container(
+            //       height: 100,
+            //       width: 444,
+            //       decoration: BoxDecoration(
+            //         color: bottomtacolor,
+            //         borderRadius: BorderRadius.all(Radius.circular(20)),
+            //       ),
+            //       child: Padding(
+            //         padding: const EdgeInsets.symmetric(horizontal: 25),
+            //         child: Column(
+            //           mainAxisAlignment: MainAxisAlignment.center,
+            //           children: [
+            //             Row(
+            //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //               children: [
+            //                 Align(
+            //                   alignment: Alignment.topLeft,
+            //                   child: Text(
+            //                     "Verfied your profile",
+            //                     style: TextStyle(
+            //                       color: greenbg,
+            //                       fontSize: 16,
+            //                       fontWeight: FontWeight.w500,
+            //                     ),
+            //                   ),
+            //                 ),
+            //
+            //                 Container(
+            //                   height: 60,
+            //                   width: 60,
+            //                   child: Image.asset('assets/logo/verification.png'),
+            //                 ),
+            //               ],
+            //             ),
+            //           ],
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            //
+            //
+            // profilepageapi['imgStatus'] == "pending"
+            //     ? GestureDetector(
+            //   onTap: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(builder: (context) => test()),
+            //     );
+            //   },
+            //   child: Padding(
+            //     padding: const EdgeInsets.symmetric(horizontal: 20),
+            //     child: Container(
+            //       height: 100,
+            //       width: 444,
+            //       decoration: BoxDecoration(
+            //         color: bottomtacolor,
+            //         borderRadius: BorderRadius.all(Radius.circular(20)),
+            //       ),
+            //       child: Padding(
+            //         padding: const EdgeInsets.symmetric(horizontal: 25),
+            //         child: Column(
+            //           mainAxisAlignment: MainAxisAlignment.center,
+            //           children: [
+            //             Align(
+            //               alignment: Alignment.topLeft,
+            //               child: Row(
+            //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //                 children: [
+            //                   Text(
+            //                     "Verification Pending",
+            //                     style: TextStyle(
+            //                       color: redbtm,
+            //                       fontSize: 16,
+            //                       fontWeight: FontWeight.w500,
+            //                     ),
+            //                   ),
+            //                   Icon(Icons.access_time, color: redbtm, size: 17,),
+            //                   Container(
+            //                     height: 30,
+            //                     width: 65,
+            //                     decoration: BoxDecoration(
+            //                       color: redbtm,
+            //                       borderRadius: BorderRadius.all(Radius.circular(10)),
+            //                     ),
+            //                     child: Center(
+            //                       child: Text(
+            //                         "Verify Now",
+            //                         style: TextStyle(color: bg1, fontSize: 8),
+            //                       ),
+            //                     ),
+            //                   ),
+            //                 ],
+            //               ),
+            //             ),
+            //           ],
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // )
+            //     : profilepageapi['userStatus'] == "progress"
+            //     ? Text(
+            //   "progress",
+            //   style: TextStyle(
+            //     color: greenbg,
+            //     fontSize: 20,
+            //     fontWeight: FontWeight.bold,
+            //   ),
+            // )
+            //     : Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 20),
+            //   child: Container(
+            //     height: 100,
+            //     width: 444,
+            //     decoration: BoxDecoration(
+            //       color: bottomtacolor,
+            //       borderRadius: BorderRadius.all(Radius.circular(20)),
+            //     ),
+            //     child: Padding(
+            //       padding: const EdgeInsets.symmetric(horizontal: 25),
+            //       child: Column(
+            //         mainAxisAlignment: MainAxisAlignment.center,
+            //         children: [
+            //           Row(
+            //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //             children: [
+            //               Align(
+            //                 alignment: Alignment.topLeft,
+            //                 child: Text(
+            //                   "Verification In Progress",
+            //                   style: TextStyle(
+            //                     color: redbtm,
+            //                     fontSize: 16,
+            //                     fontWeight: FontWeight.w500,
+            //                   ),
+            //                 ),
+            //               ),
+            //             ],
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            // ),
+
+            homedata['userStatus'] == "pending"
+                ? GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => verificationpage()),
+                );
+              },
+              child:  Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Container(
+                  height: 35,
+                  width: 220,
+                  decoration:BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                        Radius.circular(10)
+                    ),
+                    gradient: LinearGradient(
+                      colors: [yellow, yellow2], // Specify your gradient colors
+                      begin: Alignment.topCenter, // Specify the alignment of the gradient (start from the left)
+                      end: Alignment.bottomCenter, // Specify the alignment of the gradient (end at the right)
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Verification In Progress",style: TextStyle(color: btnttext),),
+
+                      SizedBox(width: 10),
+
+                      SvgPicture.asset(
+                        'assets/svg/timeicon.svg',
+                        width: 18,
+                        height: 18,
+                      ),
+
+                    ],
+                  ),
+
+                ),
+              ),
+            )
+                : homedata['userStatus'] == "readyToApprove"
+                ? Container(
+              height: 35,
+              width: 220,
+              decoration:BoxDecoration(
+                borderRadius: BorderRadius.all(
+                    Radius.circular(10)
+                ),
+                gradient: LinearGradient(
+                  colors: [yellow, yellow2], // Specify your gradient colors
+                  begin: Alignment.topCenter, // Specify the alignment of the gradient (start from the left)
+                  end: Alignment.bottomCenter, // Specify the alignment of the gradient (end at the right)
+                ),
+              ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Verification In Progress",style: TextStyle(color: btnttext),),
+
+                      SizedBox(width: 10),
+
+                      SvgPicture.asset(
+                        'assets/svg/timeicon.svg',
+                        width: 18,
+                        height: 18,
+                      ),
+
+                    ],
+                  ),
+                )
+                : homedata['userStatus'] == "approved" // Check for "approved" status
+                ?   Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Container(
                 height: 35,
                 width: 220,
@@ -161,26 +473,74 @@ class _homepageState extends State<homepage> {
                     end: Alignment.bottomCenter, // Specify the alignment of the gradient (end at the right)
                   ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Verification Pending",style: TextStyle(color: btnttext),),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Approved",style: TextStyle(color: btnttext),),
 
-                    SizedBox(width: 10),
+                          SizedBox(width: 10),
 
-                    SvgPicture.asset(
-                      'assets/svg/timeicon.svg',
-                      width: 18,
-                      height: 18,
-                    ),
+                          SvgPicture.asset(
+                            'assets/svg/members.svg',
+                            width: 18,
+                            height: 18,
+                          ),
 
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
+              ),
+            )
+                : Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Container(
+                height: 100,
+                width: 444,
+                decoration: BoxDecoration(
+                  color: bottomtacolor,
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              "Verified your profile",
+                              style: TextStyle(
+                                color: bg1,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
 
+                          Container(
+                            height: 60,
+                            width: 60,
+                            child: Image.asset('assets/logo/verification.png'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
 
-            SizedBox(height: 35,),
+            SizedBox(height: 20,),
 
 
             Padding(
@@ -202,7 +562,7 @@ class _homepageState extends State<homepage> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("Choose your Package",style:TextStyle(color: yellow,fontSize: 12),),
+                          Text("Add Fund",style:TextStyle(color: yellow,fontSize: 12),),
                           Text("Package",style:TextStyle(color: bg1,fontSize: 10),),
                         ],
                       ),

@@ -27,6 +27,13 @@ class HomeService {
   }
 
 
+  static Future verificationimage(data) async {
+    // print(username);
+    var dio = await DioHelper.getInstance();
+    var response = await dio.post('$baseURL/api/user/verify-user',data:data);
+    return response;
+  }
+
 
 
 }

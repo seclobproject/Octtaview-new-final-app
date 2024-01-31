@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../resources/color.dart';
 import '../../../services/home_service.dart';
+import '../../../services/profile_service.dart';
 import '../../../support/logger.dart';
 import '../../wallet/widgets/qrcode_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,6 +20,22 @@ class _packagesState extends State<packages> {
   var userid;
   var packagedata;
   bool _isLoading = true;
+  var profilelist;
+
+
+
+
+
+  Future _profileapi() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userid = prefs.getString('userid');
+    var response = await ProfileService.ProfilePage();
+    log.i('profile data Show.. $response');
+    setState(() {
+      profilelist = response;
+
+    });
+  }
 
   Future _Homedetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -34,7 +51,8 @@ class _packagesState extends State<packages> {
   Future _initLoad() async {
     await Future.wait(
       [
-        _Homedetails()
+        _Homedetails(),
+        _profileapi()
       ],
     );
     _isLoading = false;
@@ -63,8 +81,45 @@ class _packagesState extends State<packages> {
       ),
 
       body:  _isLoading
-          ?  Center(
-          child:CircularProgressIndicator()
+          ? Center(
+        child: CircularProgressIndicator(),
+      )
+          : (packagedata['userStatus'] == "pending" && packagedata.isEmpty)
+          ? Center(
+        child: Column(
+          children: [
+            SizedBox(height: 150,),
+            SvgPicture.asset(
+              'assets/svg/noactivation.svg',
+              height: 200,
+            ),
+            SizedBox(height: 10,),
+
+            Text("Activation\nPending..!!",
+              style: TextStyle(color: bg1,fontSize: 25,fontWeight: FontWeight.w700),)
+          ],
+        ),
+      )
+          : (packagedata['userStatus'] == "pending")
+          ? Center(
+        child: Text(
+          "User status is pending.",
+          style: TextStyle(color: Colors.red),
+        ),
+      )
+          : (packagedata.isEmpty)
+          ? Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/png/nouser.png',
+              height: 100,
+            ),
+            SizedBox(height: 10,),
+            Text("No User Found !",style: TextStyle(color: bg1,fontSize: 20,fontWeight: FontWeight.w700),)
+          ],
+        ),
       )
           : Column(
         children: [
@@ -162,7 +217,7 @@ class _packagesState extends State<packages> {
 
           Expanded(
             child: ListView.builder(
-                itemCount: packagedata['addFundHistory'].length,
+                itemCount: packagedata['allFundHistory']?.length ?? 0,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding:  EdgeInsets.symmetric(horizontal: 20),
@@ -177,14 +232,18 @@ class _packagesState extends State<packages> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
-                                    width:68,
-                                    height: 15,
-                                    child: Text(packagedata['addFundHistory'][index]['createdAt'],style: TextStyle(color: btnttext,fontSize: 10))),
+                                  width: 68,
+                                  height: 15,
+                                  child: Text(
+                                    packagedata['allFundHistory'][index]['createdAt'] ?? 'Default Value',
+                                    style: TextStyle(color: btnttext, fontSize: 10),
+                                  ),
+                                ),
                                 Text("10:30 PM",style: TextStyle(color: btnttext,fontSize: 10)),
                               ],
                             ),
-                            Text(packagedata['addFundHistory'][index]['transactionCode'],style: TextStyle(color: btnttext,fontSize: 10)),
-                            Text(packagedata['addFundHistory'][index]['topUpAmount'].toString(),style: TextStyle(color: btnttext,fontSize: 10)),
+                            Text(packagedata['allFundHistory'][index]['transactionCode']?? 'Default Value',style: TextStyle(color: btnttext,fontSize: 10)),
+                            Text(packagedata['allFundHistory'][index]['topUpAmount'].toString(),style: TextStyle(color: btnttext,fontSize: 10)),
 
                             Container(
                               height: 20,
@@ -193,7 +252,7 @@ class _packagesState extends State<packages> {
                                 color: greendark,
                                 borderRadius: BorderRadius.all(Radius.circular(10))
                               ),
-                              child: Center(child: Text(packagedata['addFundHistory'][index]['status'],style: TextStyle(fontSize: 8,color: bg1),)),
+                              child: Center(child: Text(packagedata['allFundHistory'][index]['status'],style: TextStyle(fontSize: 8,color: bg1),)),
                             )
                           ],
                         ),
