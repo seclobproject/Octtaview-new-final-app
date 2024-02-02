@@ -99,7 +99,7 @@ class _tablevelthreeState extends State<tablevelthree> {
                                   SizedBox(height: 5,),
                                   Padding(
                                     padding:  EdgeInsets.symmetric(horizontal: 20,),
-                                    child: Text(memberdata['sponserId'],style: TextStyle(color: bg1,fontSize: 10),),
+                                    child: Text(memberdata['ownSponserId'],style: TextStyle(color: bg1,fontSize: 10),),
                                   ),
                                 ],
                               ),
@@ -179,7 +179,7 @@ class _tablevelthreeState extends State<tablevelthree> {
                                     SizedBox(height: 10,),
                                     Text("Phone Number",style: TextStyle(color: bg1,fontSize: 10),),
                                     SizedBox(height: 5,),
-                                    Text(memberdata['child3'][index]['phone'].toString(),style: TextStyle(color: btnttext,fontSize: 10),),
+                                    Text(maskPhoneNumber(memberdata['child3'][index]['phone'].toString()), style: TextStyle(color: btnttext, fontSize: 10)),
                                   ],
                                 ),
                                 Column(
@@ -190,7 +190,7 @@ class _tablevelthreeState extends State<tablevelthree> {
                                       child: Text("Email",style: TextStyle(color: bg1,fontSize: 10),),
                                     ),
                                     SizedBox(height: 5,),
-                                    Text(memberdata['child3'][index]['email'],style: TextStyle(color: btnttext,fontSize: 10)),
+                                    Text(maskPhoneNumber(memberdata['child3'][index]['email'].toString()), style: TextStyle(color: btnttext, fontSize: 10)),
                                   ],
                                 ),
                               ],
@@ -230,3 +230,22 @@ class _tablevelthreeState extends State<tablevelthree> {
 
 
 
+String maskPhoneNumber(String phoneNumber) {
+  // Define the number of characters to display before masking
+  int visibleChars = 4;
+
+  // Check if the phone number is not null and has enough characters
+  if (phoneNumber != null && phoneNumber.length >= visibleChars) {
+
+    String visiblePart = phoneNumber.substring(phoneNumber.length - visibleChars);
+
+    // Create the masked part with stars
+    String maskedPart = '*' * (phoneNumber.length - visibleChars);
+
+    // Concatenate the visible and masked parts
+    return '$maskedPart$visiblePart';
+  } else {
+    // Return the original phone number if it's null or too short
+    return phoneNumber;
+  }
+}

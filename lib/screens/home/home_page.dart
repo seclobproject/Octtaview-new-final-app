@@ -748,7 +748,7 @@ class _homepageState extends State<homepage> {
                               Container(
                                   height: 20,
                                   width: 70,
-                                  child: Text(homedata?['levelRoi'].toString() ?? '0',style: TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),)),
+                                  child: Text(homedata?['dailyBonus'].toString() ?? '0',style: TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),)),
                             ],
                           ),
 

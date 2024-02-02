@@ -108,12 +108,8 @@ class _capitalamountwithdrawalsState extends State<capitalamountwithdrawals> {
       return false;
     }
 
-
-
     return true;
   }
-
-
 
 
   @override

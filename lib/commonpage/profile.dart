@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:octtaviewnew/commonpage/transaction_password.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../resources/color.dart';
 import '../services/home_service.dart';
@@ -8,6 +9,7 @@ import '../support/logger.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'change_password.dart';
+
 
 
 class profilepage extends StatefulWidget {
@@ -149,10 +151,10 @@ class _profilepageState extends State<profilepage> {
 
                   InkWell(
                     onTap: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => const forgottpassword()),
-                      // );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const transactionpassword()),
+                      );
                     },
                     child: Padding(
                       padding:  EdgeInsets.symmetric(horizontal: 20),

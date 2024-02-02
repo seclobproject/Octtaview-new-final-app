@@ -16,7 +16,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     Timer(
-        Duration(seconds: 3),
+        Duration(seconds:3),
             () => Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -28,13 +28,13 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
-        duration: 5000,
+        duration: 6000,
         splashIconSize: 350,
         splash: 'assets/logo/logooctavia.png',
         nextScreen: Landing_Page(
             title: 'landingpage'
         ),
-        splashTransition: SplashTransition.fadeTransition,
+        splashTransition: SplashTransition.slideTransition,
         pageTransitionType: PageTransitionType.scale,
         backgroundColor: sevensgbg);
   }

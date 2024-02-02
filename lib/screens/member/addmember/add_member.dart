@@ -29,6 +29,7 @@ class _addmemberState extends State<addmember> {
   String? phone;
   String? address;
   String? password;
+  String? tnxpassword;
 
 
   Future addmember() async {
@@ -41,7 +42,7 @@ class _addmemberState extends State<addmember> {
         'email': email,
         'phone': phone,
         "address": address,
-        "transactionPassword":"123456",
+        "transactionPassword":tnxpassword,
         "password": password,
       };
 
@@ -66,7 +67,7 @@ class _addmemberState extends State<addmember> {
         // Handle other errors or rethrow them if not handled here
         throw ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Internal Server Error'),
+            content: Text('User already exists!'),
             duration: Duration(seconds: 3),
           ),
         );
@@ -348,7 +349,57 @@ class _addmemberState extends State<addmember> {
             ),
           ),
 
-          SizedBox(height: 40,),
+          SizedBox(height: 20,),
+
+
+
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Container(
+              height: 45,
+              decoration: BoxDecoration(
+                  color: bottomtabclr,
+                  borderRadius: BorderRadius.all(Radius.circular(10))
+              ),
+              child: TextField(
+                obscureText: hidePassword,
+                decoration: InputDecoration(
+
+                  hintText: 'Transaction Password',
+                  suffixIcon: IconButton(
+                    icon: hidePassword
+                        ? Icon(Icons.visibility_off)
+                        : Icon(Icons.visibility),
+                    onPressed: () {
+                      setState(() {
+                        hidePassword = !hidePassword;
+                      });
+                    },
+                  ),
+                  hintStyle: TextStyle(color: yellow),
+                  contentPadding: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    borderSide: BorderSide(color: yellow, width: 1),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    borderSide: BorderSide(color: yellow),
+                  ),
+
+                ),
+
+                onChanged: (text) {
+                  setState(() {
+                    tnxpassword=text;
+                  });
+                },
+                style: TextStyle(color: bg1,fontSize: 14),
+              ),
+            ),
+          ),
+
+          SizedBox(height: 20,),
 
           // GestureDetector(
           //   onTap: (){

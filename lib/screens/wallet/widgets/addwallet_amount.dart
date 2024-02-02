@@ -34,7 +34,7 @@ class _addwalletamountState extends State<addwalletamount> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       userid = prefs.getString('userid');
       var reqData = {
-        'amount': amount,
+        'amount': _enteredAmount,
         'transactionPassword': transactionPassword,
         'walletUrl': walletUrl,
       };
@@ -116,6 +116,15 @@ class _addwalletamountState extends State<addwalletamount> {
   }
 
 
+  TextEditingController amountController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    // Set the initial value of the TextField to the reduced amount
+    amountController.text = (_enteredAmount * 0.96).toStringAsFixed(2);
+  }
+
 
 
   @override
@@ -133,47 +142,6 @@ class _addwalletamountState extends State<addwalletamount> {
         children: [
 
           SizedBox(height: 20,),
-
-
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Container(
-              height: 45,
-              decoration: BoxDecoration(
-                color: bottomtabclr,
-                borderRadius: BorderRadius.all(Radius.circular(10))
-              ),
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: 'Total Amount',
-                  hintStyle: TextStyle(color: yellow),
-                  contentPadding: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    borderSide: BorderSide(color: yellow, width: 1),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    borderSide: BorderSide(color: yellow),
-                  ),
-
-                ),
-
-                onChanged: (text) {
-                  setState(() {
-                    // _enteredAmount = double.tryParse(text) ?? 0.0;
-                  });
-                },
-
-                style: TextStyle(color: bg1,fontSize: 14),
-              ),
-            ),
-          ),
-
-
-          SizedBox(height: 20,),
-
-
 
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -211,25 +179,19 @@ class _addwalletamountState extends State<addwalletamount> {
             ),
           ),
 
+          SizedBox(height: 10,),
+
 
           Text(
             '4% Reduced Amount: ${(_enteredAmount * 0.96).toStringAsFixed(2)}', // Calculate the reduced amount
-            style: TextStyle(color: Colors.green, fontSize: 16), // Change this to your desired color
-          ),
-
-
-
-          SizedBox(height: 10,),
-
-
-          Padding(
-            padding:  EdgeInsets.symmetric(horizontal: 20),
-            child: Align(
-                alignment: Alignment.centerRight,
-                child: Text("Service Charge 4% deducted",style: TextStyle(fontSize: 10,color:bg1 ),)),
+            style: TextStyle(color:yellow, fontSize: 16), // Change this to your desired color
           ),
 
           SizedBox(height: 10,),
+
+
+
+
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Container(

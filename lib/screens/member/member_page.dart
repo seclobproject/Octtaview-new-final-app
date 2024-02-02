@@ -81,8 +81,8 @@ class _memberpageState extends State<membertabpage> {
           ),
           centerTitle: true,
           title: Text(
-            "Activated Pin",
-            style: TextStyle(color: bg1, fontSize: 16),
+            "Member View",
+            style: TextStyle(color: yellow, fontSize: 16),
           ),
           elevation: 0,
           bottom: TabBar(

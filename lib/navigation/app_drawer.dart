@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../authentication/login.dart';
 import '../commonpage/profile.dart';
+import '../commonpage/termsandcondition.dart';
 import '../resources/color.dart';
 import '../services/profile_service.dart';
 import '../support/logger.dart';
@@ -195,7 +196,10 @@ class _appdrawerState extends State<appdrawer> {
             ignoring: true,
             child:  InkWell(
               onTap: (){
-
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>  MyApp()),
+                );
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
@@ -219,7 +223,10 @@ class _appdrawerState extends State<appdrawer> {
           )
               :  InkWell(
             onTap: (){
-
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) =>  MyApp()),
+              );
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
