@@ -119,6 +119,7 @@ class _homepageState extends State<homepage> {
               ),
             ),
 
+
             SizedBox(height: 10,),
 
 
@@ -228,162 +229,6 @@ class _homepageState extends State<homepage> {
               ),
             ) :
 
-            //   profilepageapi['userStatus'] == "progress" ?
-            //
-            //   Text(
-            //     "Verification In Progress",
-            //     style: TextStyle(
-            //       color: yellow, // Set the desired color for accepted status text
-            //       fontSize: 20,
-            //       fontWeight: FontWeight.bold,
-            //     ),
-            //   ) :
-            //   Padding(
-            //     padding: const EdgeInsets.symmetric(horizontal: 20),
-            //     child: Container(
-            //       height: 100,
-            //       width: 444,
-            //       decoration: BoxDecoration(
-            //         color: bottomtacolor,
-            //         borderRadius: BorderRadius.all(Radius.circular(20)),
-            //       ),
-            //       child: Padding(
-            //         padding: const EdgeInsets.symmetric(horizontal: 25),
-            //         child: Column(
-            //           mainAxisAlignment: MainAxisAlignment.center,
-            //           children: [
-            //             Row(
-            //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //               children: [
-            //                 Align(
-            //                   alignment: Alignment.topLeft,
-            //                   child: Text(
-            //                     "Verfied your profile",
-            //                     style: TextStyle(
-            //                       color: greenbg,
-            //                       fontSize: 16,
-            //                       fontWeight: FontWeight.w500,
-            //                     ),
-            //                   ),
-            //                 ),
-            //
-            //                 Container(
-            //                   height: 60,
-            //                   width: 60,
-            //                   child: Image.asset('assets/logo/verification.png'),
-            //                 ),
-            //               ],
-            //             ),
-            //           ],
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            //
-            //
-            // profilepageapi['imgStatus'] == "pending"
-            //     ? GestureDetector(
-            //   onTap: () {
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(builder: (context) => test()),
-            //     );
-            //   },
-            //   child: Padding(
-            //     padding: const EdgeInsets.symmetric(horizontal: 20),
-            //     child: Container(
-            //       height: 100,
-            //       width: 444,
-            //       decoration: BoxDecoration(
-            //         color: bottomtacolor,
-            //         borderRadius: BorderRadius.all(Radius.circular(20)),
-            //       ),
-            //       child: Padding(
-            //         padding: const EdgeInsets.symmetric(horizontal: 25),
-            //         child: Column(
-            //           mainAxisAlignment: MainAxisAlignment.center,
-            //           children: [
-            //             Align(
-            //               alignment: Alignment.topLeft,
-            //               child: Row(
-            //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //                 children: [
-            //                   Text(
-            //                     "Verification Pending",
-            //                     style: TextStyle(
-            //                       color: redbtm,
-            //                       fontSize: 16,
-            //                       fontWeight: FontWeight.w500,
-            //                     ),
-            //                   ),
-            //                   Icon(Icons.access_time, color: redbtm, size: 17,),
-            //                   Container(
-            //                     height: 30,
-            //                     width: 65,
-            //                     decoration: BoxDecoration(
-            //                       color: redbtm,
-            //                       borderRadius: BorderRadius.all(Radius.circular(10)),
-            //                     ),
-            //                     child: Center(
-            //                       child: Text(
-            //                         "Verify Now",
-            //                         style: TextStyle(color: bg1, fontSize: 8),
-            //                       ),
-            //                     ),
-            //                   ),
-            //                 ],
-            //               ),
-            //             ),
-            //           ],
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // )
-            //     : profilepageapi['userStatus'] == "progress"
-            //     ? Text(
-            //   "progress",
-            //   style: TextStyle(
-            //     color: greenbg,
-            //     fontSize: 20,
-            //     fontWeight: FontWeight.bold,
-            //   ),
-            // )
-            //     : Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 20),
-            //   child: Container(
-            //     height: 100,
-            //     width: 444,
-            //     decoration: BoxDecoration(
-            //       color: bottomtacolor,
-            //       borderRadius: BorderRadius.all(Radius.circular(20)),
-            //     ),
-            //     child: Padding(
-            //       padding: const EdgeInsets.symmetric(horizontal: 25),
-            //       child: Column(
-            //         mainAxisAlignment: MainAxisAlignment.center,
-            //         children: [
-            //           Row(
-            //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //             children: [
-            //               Align(
-            //                 alignment: Alignment.topLeft,
-            //                 child: Text(
-            //                   "Verification In Progress",
-            //                   style: TextStyle(
-            //                     color: redbtm,
-            //                     fontSize: 16,
-            //                     fontWeight: FontWeight.w500,
-            //                   ),
-            //                 ),
-            //               ),
-            //             ],
-            //           ),
-            //         ],
-            //       ),
-            //     ),
-            //   ),
-            // ),
 
             homedata['userStatus'] == "pending"
                 ? GestureDetector(
@@ -581,7 +426,7 @@ class _homepageState extends State<homepage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(homedata?['capitalAmount'].toString() ?? '0',style:TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),),
+                        Text('\$${homedata?['capitalAmount'].toString() ?? '0'}',style:TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),),
                         Text("Capital Amount",style:TextStyle(color: bg1,fontSize: 10),),
                       ],
                     ),
@@ -610,14 +455,14 @@ class _homepageState extends State<homepage> {
                         Container(
                             height:20,
                             width: 70,
-                            child: Text(homedata?['totalIncome'].toString() ?? '0',style:TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),)),
+                            child: Text('\$${homedata?['capitalAmount'].toString() ?? '0'}',style:TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),)),
                         Text("Wallet Amount ",style:TextStyle(color: bg1,fontSize: 10),),
                       ],
                     ),
                   ),
 
                   SizedBox(width: 10,),
-
+                  // totalIncome
                   Container(
                     height: 80,
                     width: 165,
@@ -627,8 +472,9 @@ class _homepageState extends State<homepage> {
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
+
                       children: [
-                        Text(homedata?['dailyBonus'].toString() ?? '0',style:TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),),
+                        Text('\$${homedata?['dailyBonus'].toString() ?? '0'}',style:TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),),
                         Text("9:00 PM November 20",style:TextStyle(color: btnttext,fontSize: 10),),
                         Text("Daily Bonus",style:TextStyle(color: bg1,fontSize: 10),),
                       ],
@@ -676,7 +522,7 @@ class _homepageState extends State<homepage> {
                         Container(
                             height:20,
                             width: 70,
-                            child: Text(homedata?['totalIncome'].toString() ?? '0',style:TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),)),
+                            child: Text('\$${homedata?['totalIncome'].toString() ?? '0'}',style:TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),)),
                         Text("Total Income",style:TextStyle(color: bg1,fontSize: 10),),
                       ],
                     ),
@@ -706,7 +552,7 @@ class _homepageState extends State<homepage> {
                         Column(
                           children: [
                             Text("Direct Income ",style: TextStyle(color: bg1,fontSize: 14,fontWeight: FontWeight.w700)),
-                            Text(homedata?['directIncome'].toString() ?? '0',style: TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),),
+                            Text('\$${homedata?['directIncome'].toString() ?? '0'}',style:TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),),
                           ],
                         ),
 
@@ -745,10 +591,7 @@ class _homepageState extends State<homepage> {
                           Column(
                             children: [
                               Text("ROI Income ",style: TextStyle(color: bg1,fontSize: 14,fontWeight: FontWeight.w700)),
-                              Container(
-                                  height: 20,
-                                  width: 70,
-                                  child: Text(homedata?['dailyBonus'].toString() ?? '0',style: TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),)),
+                              Text('\$${homedata?['dailyBonus'].toString() ?? '0'}',style:TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),),
                             ],
                           ),
 
@@ -763,10 +606,7 @@ class _homepageState extends State<homepage> {
                               Column(
                                 children: [
                                   Text("Level Income",style: TextStyle(color: bg1,fontSize: 14,fontWeight: FontWeight.w700)),
-                                  Container(
-                                      height: 20,
-                                      width: 70,
-                                      child: Text(homedata?['levelRoi'].toString() ?? '0',style: TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),)),
+                                  Text('\$${homedata?['levelRoi'].toString() ?? '0'}',style:TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),),
                                 ],
                               ),
 

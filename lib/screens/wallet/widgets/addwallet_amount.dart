@@ -20,12 +20,13 @@ class _addwalletamountState extends State<addwalletamount> {
   bool isLoading = false;
 
   String? amount;
+  bool hidePassword = true;
   String? transactionPassword;
   String? walletUrl;
   bool isButtonDisabled = true;
 
   TextEditingController _amountController = TextEditingController();
-  double _enteredAmount = 0.0;
+  double enteredAmount = 0.0;
 
 
   Future addmoney() async {
@@ -34,7 +35,7 @@ class _addwalletamountState extends State<addwalletamount> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       userid = prefs.getString('userid');
       var reqData = {
-        'amount': _enteredAmount,
+        'amount': enteredAmount,
         'transactionPassword': transactionPassword,
         'walletUrl': walletUrl,
       };
@@ -90,7 +91,7 @@ class _addwalletamountState extends State<addwalletamount> {
       return false;
     }
 
-    if (amount == null || amount!.isEmpty) {
+    if (enteredAmount == null || enteredAmount == 0) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Please enter a valid amount number'),
@@ -122,7 +123,7 @@ class _addwalletamountState extends State<addwalletamount> {
   void initState() {
     super.initState();
     // Set the initial value of the TextField to the reduced amount
-    amountController.text = (_enteredAmount * 0.96).toStringAsFixed(2);
+    amountController.text = (enteredAmount * 0.96).toStringAsFixed(2);
   }
 
 
@@ -171,7 +172,7 @@ class _addwalletamountState extends State<addwalletamount> {
 
                 onChanged: (text) {
                   setState(() {
-                    _enteredAmount = double.tryParse(text) ?? 0.0;
+                    enteredAmount = double.tryParse(text) ?? 0.0;
                   });
                 },
                 style: TextStyle(color: bg1,fontSize: 14), // Change this to your desired color
@@ -183,7 +184,7 @@ class _addwalletamountState extends State<addwalletamount> {
 
 
           Text(
-            '4% Reduced Amount: ${(_enteredAmount * 0.96).toStringAsFixed(2)}', // Calculate the reduced amount
+            '4% Reduced Amount: ${(enteredAmount * 0.96).toStringAsFixed(2)}', // Calculate the reduced amount
             style: TextStyle(color:yellow, fontSize: 16), // Change this to your desired color
           ),
 
@@ -236,6 +237,7 @@ class _addwalletamountState extends State<addwalletamount> {
                   borderRadius: BorderRadius.all(Radius.circular(10))
               ),
               child: TextField(
+                obscureText: hidePassword,
                 decoration: InputDecoration(
                   hintText: 'Transaction password',
                   hintStyle: TextStyle(color: yellow),
@@ -247,6 +249,17 @@ class _addwalletamountState extends State<addwalletamount> {
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     borderSide: BorderSide(color: yellow),
+                  ),
+
+                  suffixIcon: IconButton(
+                    icon: hidePassword
+                        ? Icon(Icons.visibility_off)
+                        : Icon(Icons.visibility),
+                    onPressed: () {
+                      setState(() {
+                        hidePassword = !hidePassword;
+                      });
+                    },
                   ),
 
                 ),

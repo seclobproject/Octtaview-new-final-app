@@ -150,7 +150,7 @@ class _withdrawalpageState extends State<withdrawalpage> {
                           SizedBox(height: 10,),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 10,),
-                            child: Text(capitaldata['totalCapitalAmount'].toString(),style: TextStyle(color: textcolor2,fontSize: 20,fontWeight: FontWeight.w700),),
+                            child: Text('\$${capitaldata['totalCapitalAmount'].toString()}',style: TextStyle(color: textcolor2,fontSize: 20,fontWeight: FontWeight.w700),),
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 10,),
@@ -252,7 +252,8 @@ class _withdrawalpageState extends State<withdrawalpage> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(capitaldata['capitalWithdrawHistory'][index]['tnxID'],style: TextStyle(color: bg1,fontSize: 10),),
+
+                                Text('\$${capitaldata['capitalWithdrawHistory'][index]['withdrawAmount'].toString()}',style: TextStyle(color: bg1,fontSize: 15,fontWeight: FontWeight.w700),),
 
                               ],
                             ),
@@ -283,7 +284,10 @@ class _withdrawalpageState extends State<withdrawalpage> {
 
                         Align(
                             alignment:Alignment.topLeft,
-                            child: Text(capitaldata['capitalWithdrawHistory'][index]['createdAt'],style: TextStyle(color: btnttext,fontSize: 9),))
+                            child: Container(
+                                width:60,
+                                height:10,
+                                child: Text(capitaldata['capitalWithdrawHistory'][index]['createdAt'],style: TextStyle(color: btnttext,fontSize: 9),)))
                       ],
                     ),
                   );

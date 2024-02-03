@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../authentication/login.dart';
 import '../commonpage/profile.dart';
 import '../commonpage/termsandcondition.dart';
+import '../main.dart';
 import '../resources/color.dart';
 import '../services/profile_service.dart';
 import '../support/logger.dart';
@@ -198,7 +199,7 @@ class _appdrawerState extends State<appdrawer> {
               onTap: (){
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>  MyApp()),
+                  MaterialPageRoute(builder: (context) =>  MyApps()),
                 );
               },
               child: Padding(
@@ -225,7 +226,7 @@ class _appdrawerState extends State<appdrawer> {
             onTap: (){
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) =>  MyApp()),
+                MaterialPageRoute(builder: (context) =>  MyApps()),
               );
             },
             child: Padding(

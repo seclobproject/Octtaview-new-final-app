@@ -18,6 +18,7 @@ class _addmemberState extends State<addmember> {
   var userid;
   var packagedropdownvalue;
   bool hidePassword = true;
+  bool hidePassword1 = true;
   bool isButtonDisabled = true;
   bool isLoading = false;
 
@@ -240,6 +241,7 @@ class _addmemberState extends State<addmember> {
                   borderRadius: BorderRadius.all(Radius.circular(10))
               ),
               child: TextField(
+                keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   hintText: 'Phone Number',
                   hintStyle: TextStyle(color: yellow),
@@ -362,17 +364,17 @@ class _addmemberState extends State<addmember> {
                   borderRadius: BorderRadius.all(Radius.circular(10))
               ),
               child: TextField(
-                obscureText: hidePassword,
+                obscureText: hidePassword1,
                 decoration: InputDecoration(
 
                   hintText: 'Transaction Password',
                   suffixIcon: IconButton(
-                    icon: hidePassword
+                    icon: hidePassword1
                         ? Icon(Icons.visibility_off)
                         : Icon(Icons.visibility),
                     onPressed: () {
                       setState(() {
-                        hidePassword = !hidePassword;
+                        hidePassword1 = !hidePassword1;
                       });
                     },
                   ),
@@ -400,6 +402,8 @@ class _addmemberState extends State<addmember> {
           ),
 
           SizedBox(height: 20,),
+
+          
 
           // GestureDetector(
           //   onTap: (){

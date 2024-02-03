@@ -21,6 +21,7 @@ class _capitalamountwithdrawalsState extends State<capitalamountwithdrawals> {
   bool isLoading = false;
 
   String? amount;
+  bool hidePassword = true;
   String? transactionPassword;
   String? walletUrl;
   bool isButtonDisabled = true;
@@ -211,6 +212,7 @@ class _capitalamountwithdrawalsState extends State<capitalamountwithdrawals> {
                   borderRadius: BorderRadius.all(Radius.circular(10))
               ),
               child: TextField(
+                obscureText: hidePassword,
                 decoration: InputDecoration(
                   hintText: 'Transaction password',
                   hintStyle: TextStyle(color: yellow),
@@ -222,6 +224,17 @@ class _capitalamountwithdrawalsState extends State<capitalamountwithdrawals> {
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     borderSide: BorderSide(color: yellow),
+                  ),
+
+                  suffixIcon: IconButton(
+                    icon: hidePassword
+                        ? Icon(Icons.visibility_off)
+                        : Icon(Icons.visibility),
+                    onPressed: () {
+                      setState(() {
+                        hidePassword = !hidePassword;
+                      });
+                    },
                   ),
 
                 ),

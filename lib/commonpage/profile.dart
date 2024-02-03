@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:octtaviewnew/commonpage/termsandcondition.dart';
 import 'package:octtaviewnew/commonpage/transaction_password.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../resources/color.dart';
@@ -167,10 +168,10 @@ class _profilepageState extends State<profilepage> {
 
                   GestureDetector(
                     onTap: (){
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => const terms()),
-                      // );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) =>  MyApps()),
+                      );
                     },
                     child: Padding(
                       padding:  EdgeInsets.symmetric(horizontal: 20),

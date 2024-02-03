@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:octtaviewnew/resources/color.dart';
 
-void main() {
-  runApp(MyApp());
-}
 
-class MyApp extends StatelessWidget {
+
+class MyApps extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

@@ -246,8 +246,9 @@ class _walletpageState extends State<walletpage> {
                             width: 100,
                             height: 30,
                             child: Padding(
+
                               padding: EdgeInsets.symmetric(horizontal: 10,),
-                              child: Text(walletdata['walletAmount'].toString(),style: TextStyle(color: textcolor2,fontSize: 20,fontWeight: FontWeight.w700),),
+                              child: Text('\$${walletdata['walletAmount'].toString()}',style: TextStyle(color: textcolor2,fontSize: 20,fontWeight: FontWeight.w700),),
                             ),
                           ),
                         ],
@@ -262,8 +263,9 @@ class _walletpageState extends State<walletpage> {
                             child: Text("Total Referral Amount",style: TextStyle(color: bg1,fontSize: 10),),
                           ),
                           Padding(
+
                             padding: EdgeInsets.symmetric(horizontal: 10,),
-                            child: Text(walletdata['totalRefferalAmount'].toString(),style: TextStyle(color: textcolor2,fontSize: 20,fontWeight: FontWeight.w700),),
+                            child: Text('\$${walletdata['totalRefferalAmount'].toString()}',style: TextStyle(color: textcolor2,fontSize: 20,fontWeight: FontWeight.w700),),
                           ),
                         ],
                       ),
@@ -277,8 +279,9 @@ class _walletpageState extends State<walletpage> {
                             child: Text("Total Daily Bonus",style: TextStyle(color: bg1,fontSize: 10),),
                           ),
                           Padding(
+
                             padding: EdgeInsets.symmetric(horizontal: 10,),
-                            child: Text(walletdata['totalDailyBonus'].toString(),style: TextStyle(color: textcolor2,fontSize: 20,fontWeight: FontWeight.w700),),
+                            child: Text( '\$${walletdata['totalDailyBonus'].toString()}',style: TextStyle(color: textcolor2,fontSize: 20,fontWeight: FontWeight.w700),),
                           ),
                         ],
                       ),
@@ -393,7 +396,10 @@ class _walletpageState extends State<walletpage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(walletdata['walletWithdrawHistory'][index]['tnxID'],style: TextStyle(color: bg1,fontSize: 10),),
-                                Text(walletdata['walletWithdrawHistory'][index]['reportName'],style: TextStyle(color: bg1,fontSize: 10)),
+
+
+
+                                Text(walletdata['walletWithdrawHistory'][index]['walletUrl'],style: TextStyle(color: bg1,fontSize: 10)),
                               ],
                             ),
 
@@ -403,7 +409,9 @@ class _walletpageState extends State<walletpage> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(walletdata['walletWithdrawHistory'][index]['withdrawAmount'].toString(),style: TextStyle(color: bg1,fontSize: 17),),
+
+
+                                Text('\$${walletdata['walletWithdrawHistory'][index]['withdrawAmount'].toString()}',style: TextStyle(color: bg1,fontSize: 17),),
 
                                 Container(
                                   height: 12,
@@ -431,7 +439,10 @@ class _walletpageState extends State<walletpage> {
                         
                         Align(
                             alignment:Alignment.topLeft,
-                            child: Text(walletdata['walletWithdrawHistory'][index]['createdAt'],style: TextStyle(color: btnttext,fontSize: 9),))
+                            child: Container(
+                                width:60,
+                                height:10,
+                                child: Text(walletdata['walletWithdrawHistory'][index]['createdAt'],style: TextStyle(color: btnttext,fontSize: 9),)))
                       ],
                     ),
                   );

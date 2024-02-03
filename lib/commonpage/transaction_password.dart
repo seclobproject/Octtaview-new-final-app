@@ -22,6 +22,8 @@ class _transactionpasswordState extends State<transactionpassword> {
 
   String? newPassword;
   bool isButtonDisabled = true;
+  bool hidePassword1 = true;
+  bool hidePassword = true;
 
 
   Future changetnxpassword() async {
@@ -121,6 +123,7 @@ class _transactionpasswordState extends State<transactionpassword> {
                   borderRadius: BorderRadius.all(Radius.circular(10))
               ),
               child: TextField(
+                obscureText: hidePassword1,
                 decoration: InputDecoration(
                   hintText: 'New password',
                   hintStyle: TextStyle(color: yellow),
@@ -132,6 +135,18 @@ class _transactionpasswordState extends State<transactionpassword> {
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     borderSide: BorderSide(color: yellow),
+                  ),
+
+
+                  suffixIcon: IconButton(
+                    icon: hidePassword1
+                        ? Icon(Icons.visibility_off)
+                        : Icon(Icons.visibility),
+                    onPressed: () {
+                      setState(() {
+                        hidePassword1 = !hidePassword1;
+                      });
+                    },
                   ),
 
                 ),
@@ -158,6 +173,7 @@ class _transactionpasswordState extends State<transactionpassword> {
                   borderRadius: BorderRadius.all(Radius.circular(10))
               ),
               child: TextField(
+                obscureText: hidePassword,
                 decoration: InputDecoration(
                   hintText: 'Confirm password',
                   hintStyle: TextStyle(color: yellow),
@@ -169,6 +185,16 @@ class _transactionpasswordState extends State<transactionpassword> {
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     borderSide: BorderSide(color: yellow),
+                  ),
+                  suffixIcon: IconButton(
+                    icon: hidePassword
+                        ? Icon(Icons.visibility_off)
+                        : Icon(Icons.visibility),
+                    onPressed: () {
+                      setState(() {
+                        hidePassword = !hidePassword;
+                      });
+                    },
                   ),
 
                 ),
