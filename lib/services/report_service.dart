@@ -25,4 +25,22 @@ class ReportService {
   }
 
 
+  static Future levelone() async {
+    var dio = await DioHelper.getInstance();
+    var response = await dio.get('$baseURL/api/user/view-level1-Report');
+    return response.data;
+  }
+
+  static Future levetwo() async {
+    var dio = await DioHelper.getInstance();
+    var response = await dio.get('$baseURL/api/user/view-level2-Report');
+    return response.data;
+  }
+
+  static Future levelthree() async {
+    var dio = await DioHelper.getInstance();
+    var response = await dio.get('$baseURL/api/user/view-level3-Report');
+    return response.data;
+  }
+
 }

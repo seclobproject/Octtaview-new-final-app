@@ -68,6 +68,28 @@ class _roiincomeState extends State<roiincome> {
 
           SizedBox(height: 20,),
 
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+
+              children: [
+
+                Text("Date", style: TextStyle(color: bg1, fontSize: 10)),
+                SizedBox(width: 150,),
+                Text("Name", style: TextStyle(color: bg1, fontSize: 10)),
+
+                Expanded(child: SizedBox()),
+
+                Text("Level Amount", style: TextStyle(color: bg1, fontSize: 10)),
+              ],
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Divider(color: bg1, thickness: 0.5),
+          ),
+
           Expanded(
             child: ListView.builder(
                 itemCount: transationreportdata['dailyROIHistory'].length,
@@ -80,7 +102,7 @@ class _roiincomeState extends State<roiincome> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("${index + 1}",style: TextStyle(color: btnttext,fontSize: 10),),
+                            // Text("${index + 1}",style: TextStyle(color: btnttext,fontSize: 10),),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -92,12 +114,12 @@ class _roiincomeState extends State<roiincome> {
                                     style: TextStyle(color: btnttext, fontSize: 10),
                                   ),
                                 ),
-                                Text("10:30 PM",style: TextStyle(color: btnttext,fontSize: 10)),
+                                // Text("10:30 PM",style: TextStyle(color: btnttext,fontSize: 10)),
                               ],
                             ),
                             Text(transationreportdata['dailyROIHistory'][index]['name'] ?? 'no data',style: TextStyle(color: btnttext,fontSize: 10)),
                             Container(
-                                width: 100,
+                                width: 40,
                                 child: Text(transationreportdata['dailyROIHistory'][index]['creditedAmount'].toString() ?? 'no data',style: TextStyle(color: btnttext,fontSize: 10))),
 
                           ],

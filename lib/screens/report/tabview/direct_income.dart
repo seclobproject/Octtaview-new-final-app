@@ -69,6 +69,29 @@ class _directincomeState extends State<directincome> {
 
           SizedBox(height: 20,),
 
+
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+
+              children: [
+
+                Text("Date", style: TextStyle(color: bg1, fontSize: 10)),
+                SizedBox(width: 130,),
+                Text("Transaction Code", style: TextStyle(color: bg1, fontSize: 10)),
+
+                Expanded(child: SizedBox()),
+
+                Text("Level Amount", style: TextStyle(color: bg1, fontSize: 10)),
+              ],
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Divider(color: bg1, thickness: 0.5),
+          ),
+
           Expanded(
             child: ListView.builder(
                 itemCount: transationreportdata['directIncome'].length,
@@ -76,12 +99,13 @@ class _directincomeState extends State<directincome> {
                   return Padding(
                     padding:  EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
+
                       children: [
                         SizedBox(height: 5,),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("${index + 1}",style: TextStyle(color: btnttext,fontSize: 10),),
+
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -93,12 +117,11 @@ class _directincomeState extends State<directincome> {
                                     style: TextStyle(color: btnttext, fontSize: 10),
                                   ),
                                 ),
-                                Text("10:30 PM",style: TextStyle(color: btnttext,fontSize: 10)),
+                                // Text("10:30 PM",style: TextStyle(color: btnttext,fontSize: 10)),
                               ],
                             ),
                             Text(transationreportdata['directIncome'][index]['transactionCode'] ?? 'no data',style: TextStyle(color: btnttext,fontSize: 10)),
                             Container(
-                                width: 100,
                                 child: Text(transationreportdata['directIncome'][index]['amountCredited'].toString() ?? 'no data',style: TextStyle(color: btnttext,fontSize: 10))),
 
                           ],
