@@ -37,16 +37,17 @@ class _addwalletamountState extends State<addwalletamount> {
       var reqData = {
         'amount': enteredAmount,
         'transactionPassword': transactionPassword,
-        'walletUrl': walletUrl,
+        'walletWithdrawUrl': walletUrl,
       };
+      print(reqData);
 
       var response = await WalletService.addwalletamount(reqData);
       log.i('add money  . $response');
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => Bottomnav()),
-      );
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => Bottomnav()),
+      // );
     } catch (error) {
       // Handle specific error cases
       if (error.toString().contains("Money send failed")) {

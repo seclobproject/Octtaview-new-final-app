@@ -97,7 +97,7 @@ class _homepageState extends State<homepage> {
                     children: [
                       InkWell(
                         onTap: () {
-                          Share.share("https://octtaview.com/referal?id=6594f7921e76536671778ff7/$userid");
+                          Share.share("https://admin.octtaview.com/auth/registerformik?id=$userid");
                         },
                         child:  Container(
                           height: 35,

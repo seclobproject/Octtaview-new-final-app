@@ -80,9 +80,12 @@ class _leveltwoState extends State<leveltwo> {
             child: Divider(color: bg1, thickness: 0.5),
           ),
           Expanded(
-            child: ListView.builder(
+            child: levelonedata != null && levelonedata['level2Income'] != null
+                ? ListView.builder(
               itemCount: levelonedata['level2Income'].length,
               itemBuilder: (BuildContext context, int index) {
+                var userData = levelonedata['level2Income'][index];
+
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
@@ -91,23 +94,24 @@ class _leveltwoState extends State<leveltwo> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          // Text("${index + 1}", style: TextStyle(color: btnttext, fontSize: 10)),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                levelonedata['level1Income'][index]['userID'] ?? '',
+                                userData['userID'] ?? 'No data',
                                 style: TextStyle(color: btnttext, fontSize: 10),
                               ),
                             ],
                           ),
-                          Text(levelonedata['level1Income'][index]['capitalAmount'].toString() ?? 'no data',
-                              style: TextStyle(color: btnttext, fontSize: 10)),
+                          Text(
+                            userData['capitalAmount']?.toString() ?? 'No data',
+                            style: TextStyle(color: btnttext, fontSize: 10),
+                          ),
                           Container(
                             width: 20,
                             height: 20,
                             child: Text(
-                              levelonedata['level1Income'][index]['LevelAmountCredited'].toString() ?? 'no data',
+                              userData['LevelAmountCredited']?.toString() ?? 'No data',
                               style: TextStyle(color: btnttext, fontSize: 10),
                             ),
                           ),
@@ -122,8 +126,10 @@ class _leveltwoState extends State<leveltwo> {
                   ),
                 );
               },
-            ),
+            )
+                : Center(child: Text("No data",style: TextStyle(color: bg1),)),
           ),
+
         ],
       ),
 

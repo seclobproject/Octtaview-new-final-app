@@ -98,7 +98,7 @@ class _memberpageState extends State<memberpage> {
 
                                   Padding(
                                     padding:  EdgeInsets.symmetric(horizontal: 20,),
-                                    child: Text("Sponcer Id",style: TextStyle(color: bg1,fontSize: 10),),
+                                    child: Text("Sponsor Id",style: TextStyle(color: bg1,fontSize: 10),),
                                   ),
                                   SizedBox(height: 5,),
                                   Padding(

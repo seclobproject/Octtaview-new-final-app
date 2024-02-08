@@ -96,18 +96,18 @@ class _levelthreeState extends State<levelthree> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                levelonedata['level1Income'][index]['userID'] ?? '',
+                                levelonedata['level3Income'][index]['userID'] ?? '',
                                 style: TextStyle(color: btnttext, fontSize: 10),
                               ),
                             ],
                           ),
-                          Text(levelonedata['level1Income'][index]['capitalAmount'].toString() ?? 'no data',
+                          Text(levelonedata['level3Income'][index]['capitalAmount'].toString() ?? 'no data',
                               style: TextStyle(color: btnttext, fontSize: 10)),
                           Container(
                             width: 20,
                             height: 20,
                             child: Text(
-                              levelonedata['level1Income'][index]['LevelAmountCredited'].toString() ?? 'no data',
+                              levelonedata['level3Income'][index]['LevelAmountCredited'].toString() ?? 'no data',
                               style: TextStyle(color: btnttext, fontSize: 10),
                             ),
                           ),

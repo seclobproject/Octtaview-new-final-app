@@ -30,7 +30,15 @@ class _qrcodepageState extends State<qrcodepage> {
 
   String? amount= '';
   String? transactionCode;
+  String? fundurl;
 
+  TextEditingController textFieldController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    textFieldController.text = "TTXzewFCuXAFSPL9u9Z1ST1KGWSyj3MD6q";
+  }
 
   Future addmoney() async {
     try {
@@ -40,7 +48,10 @@ class _qrcodepageState extends State<qrcodepage> {
       var reqData = {
         'amount': amount,
         'transactionCode': transactionCode,
+        "addFundUrl": 'TTXzewFCuXAFSPL9u9Z1ST1KGWSyj3MD6q',
       };
+
+      print(reqData);
 
       var response = await CapitalService.capitalamountsend(reqData);
       log.i('add money  . $response');
@@ -203,59 +214,59 @@ class _qrcodepageState extends State<qrcodepage> {
             SizedBox(height: 20,),
 
 
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
-                height: 45,
-                width: 400,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: yellow
-                  ),
-                  borderRadius: BorderRadius.all(Radius.circular(10))
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        // Copy text to clipboard
-                        Clipboard.setData(ClipboardData(text: "TTXzewFCuXAFSPL9u9Z1ST1KGWSyj3MD6q"));
-                        // You can add a feedback message if needed
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Text copied to clipboard')),
-                        );
-                      },
-                      child: Text("TTXzewFCuXAFSPL9u9Z1ST1KGWSyj3MD6q", style: TextStyle(color: bg1, fontSize: 12)),
-                    ),
-                    SizedBox(width: 10),
-                    Container(
-                      height: 20,
-                      width: 45,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: yellow),
-                        gradient: LinearGradient(
-                          colors: [yellow, yellow2],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                        ),
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                      ),
-                      child: GestureDetector(
-                        onTap: (){
-                          Clipboard.setData(ClipboardData(text: "TTXzewFCuXAFSPL9u9Z1ST1KGWSyj3MD6q"));
-                          // You can add a feedback message if needed
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Text copied to clipboard')),
-                          );
-                        },
-                          child: Center(child: Text("copy", style: TextStyle(fontSize: 12, color: bg1)))),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 20),
+            //   child: Container(
+            //     height: 45,
+            //     width: 400,
+            //     decoration: BoxDecoration(
+            //       border: Border.all(
+            //         color: yellow
+            //       ),
+            //       borderRadius: BorderRadius.all(Radius.circular(10))
+            //     ),
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.center,
+            //       crossAxisAlignment: CrossAxisAlignment.center,
+            //       children: [
+            //         GestureDetector(
+            //           onTap: () {
+            //
+            //             Clipboard.setData(ClipboardData(text: "TTXzewFCuXAFSPL9u9Z1ST1KGWSyj3MD6q"));
+            //             // You can add a feedback message if needed
+            //             ScaffoldMessenger.of(context).showSnackBar(
+            //               SnackBar(content: Text('Text copied to clipboard')),
+            //             );
+            //           },
+            //           child: Text("TTXzewFCuXAFSPL9u9Z1ST1KGWSyj3MD6q", style: TextStyle(color: bg1, fontSize: 12)),
+            //         ),
+            //         SizedBox(width: 10),
+            //         Container(
+            //           height: 20,
+            //           width: 45,
+            //           decoration: BoxDecoration(
+            //             border: Border.all(color: yellow),
+            //             gradient: LinearGradient(
+            //               colors: [yellow, yellow2],
+            //               begin: Alignment.topCenter,
+            //               end: Alignment.bottomCenter,
+            //             ),
+            //             borderRadius: BorderRadius.all(Radius.circular(10)),
+            //           ),
+            //           child: GestureDetector(
+            //             onTap: (){
+            //               Clipboard.setData(ClipboardData(text: "TTXzewFCuXAFSPL9u9Z1ST1KGWSyj3MD6q"));
+            //               // You can add a feedback message if needed
+            //               ScaffoldMessenger.of(context).showSnackBar(
+            //                 SnackBar(content: Text('Text copied to clipboard')),
+            //               );
+            //             },
+            //               child: Center(child: Text("copy", style: TextStyle(fontSize: 12, color: bg1)))),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
 
             SizedBox(height: 25,),
             
@@ -300,8 +311,70 @@ class _qrcodepageState extends State<qrcodepage> {
             ),
 
             SizedBox(height: 25,),
-            
 
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Container(
+                height: 50,
+
+                decoration: BoxDecoration(
+                    color: bottomtabclr,
+                    borderRadius: BorderRadius.all(Radius.circular(10))
+                ),
+                child: TextField(
+                  controller: textFieldController,
+                  decoration: InputDecoration(
+                    // hintText: 'Transaction Number',
+                    hintStyle: TextStyle(color: yellow),
+                    contentPadding: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      borderSide: BorderSide(color: yellow, width: 1),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      borderSide: BorderSide(color: yellow),
+                    ),
+
+                  ),
+
+                  onChanged: (text) {
+                    setState(() {
+                      fundurl = text;
+                    });
+                  },
+                  style: TextStyle(color: bg1,fontSize: 14),
+                ),
+              ),
+            ),
+
+            SizedBox(height: 10,),
+
+            Container(
+              height: 20,
+              width: 55,
+              decoration: BoxDecoration(
+                border: Border.all(color: yellow),
+                gradient: LinearGradient(
+                  colors: [yellow, yellow2],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+              ),
+              child: GestureDetector(
+                  onTap: (){
+                    Clipboard.setData(ClipboardData(text: "TTXzewFCuXAFSPL9u9Z1ST1KGWSyj3MD6q"));
+                    // You can add a feedback message if needed
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Text copied to clipboard')),
+                    );
+                  },
+                  child: Center(child: Text("copy url", style: TextStyle(fontSize: 12, color: bg1)))),
+            ),
+
+            SizedBox(height: 25,),
 
 
             InkWell(
