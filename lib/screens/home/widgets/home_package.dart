@@ -189,8 +189,10 @@ class _packagesState extends State<packages> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text("Package Amount  :  ",style: TextStyle(color: bg1,fontSize: 10),),
-                        Text(packagedata['totalCapitalAmount'].toString(),style: TextStyle(color: btnttext,fontSize: 19,fontWeight: FontWeight.w700),),
+                        Text( '\$${packagedata['totalCapitalAmount'].toString()}',style: TextStyle(color: btnttext,fontSize: 19,fontWeight: FontWeight.w700),),
                         Expanded(child: SizedBox()),
+
+
                         Text("Add Fund",style: TextStyle(color: btnttext,fontSize: 10),),
                       ],
                     ),
@@ -215,6 +217,27 @@ class _packagesState extends State<packages> {
 
           SizedBox(height: 20,),
 
+
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+
+              children: [
+
+
+                Text("Date",style: TextStyle(color: bg1),),
+                SizedBox(width: 95,),
+                Text("Txn No",style: TextStyle(color: bg1),),
+                SizedBox(width: 35,),
+                Text("Amount",style: TextStyle(color: bg1),),
+                SizedBox(width: 40,),
+                Text("Status",style: TextStyle(color: bg1),),
+              ],
+            ),
+          ),
+
+          SizedBox(height: 20,),
+
           Expanded(
             child: ListView.builder(
                 itemCount: packagedata['allFundHistory']?.length ?? 0,
@@ -223,11 +246,13 @@ class _packagesState extends State<packages> {
                     padding:  EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
                       children: [
+
+
                         SizedBox(height: 5,),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("${index + 1}",style: TextStyle(color: btnttext,fontSize: 10),),
+
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -243,7 +268,7 @@ class _packagesState extends State<packages> {
                               ],
                             ),
                             Text(packagedata['allFundHistory'][index]['transactionCode']?? 'Default Value',style: TextStyle(color: btnttext,fontSize: 10)),
-                            Text(packagedata['allFundHistory'][index]['topUpAmount'].toString(),style: TextStyle(color: btnttext,fontSize: 10)),
+                            Text('\$${packagedata['allFundHistory'][index]['topUpAmount'].toString()}',style: TextStyle(color: btnttext,fontSize: 10)),
 
                             Container(
                               height: 20,

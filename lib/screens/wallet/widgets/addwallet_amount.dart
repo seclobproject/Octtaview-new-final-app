@@ -29,6 +29,62 @@ class _addwalletamountState extends State<addwalletamount> {
   double enteredAmount = 0.0;
 
 
+  // Future addmoney() async {
+  //   try {
+  //     setState(() {});
+  //     SharedPreferences prefs = await SharedPreferences.getInstance();
+  //     userid = prefs.getString('userid');
+  //     var reqData = {
+  //       'amount': enteredAmount,
+  //       'transactionPassword': transactionPassword,
+  //       'walletWithdrawUrl': walletUrl,
+  //     };
+  //     print(reqData);
+  //
+  //     var response = await WalletService.addwalletamount(reqData);
+  //     log.i('add money  . $response');
+  //
+  //     // Navigator.push(
+  //     //   context,
+  //     //   MaterialPageRoute(builder: (context) => Bottomnav()),
+  //     // );
+  //   } catch (error) {
+  //     // Handle specific error cases
+  //     if (error.toString().contains("Money send failed")) {
+  //       // Show a SnackBar or AlertDialog to inform the user
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(
+  //           content: Text('Money send failed'),
+  //           duration: Duration(seconds: 3),
+  //         ),
+  //       );
+  //     } else {
+  //       // Handle other errors or rethrow them if not handled here
+  //       throw ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(
+  //           content: Text('Internal Server Error'),
+  //           duration: Duration(seconds: 3),
+  //         ),
+  //       );
+  //     }
+  //   }
+  // }
+
+
+
+
+  Future _Walletdetails() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userid = prefs.getString('userid');
+    var response = await WalletService.WalletServiceData();
+    log.i('Wallet data List.. $response');
+    setState(() {
+      walletdata = response;
+    });
+  }
+
+
+
   Future addmoney() async {
     try {
       setState(() {});
@@ -39,19 +95,31 @@ class _addwalletamountState extends State<addwalletamount> {
         'transactionPassword': transactionPassword,
         'walletWithdrawUrl': walletUrl,
       };
-      print(reqData);
 
       var response = await WalletService.addwalletamount(reqData);
       log.i('add money  . $response');
 
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => Bottomnav()),
-      // );
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Withdrawal Successfull'),
+      ));
+
+      if (response['success'] == false && response['statusCode'] == 401) {
+        // Show a SnackBar or AlertDialog for wrong transaction password
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Wrong Transaction Password'),
+            duration: Duration(seconds: 3),
+          ),
+        );
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Bottomnav()),
+        );
+      }
     } catch (error) {
-      // Handle specific error cases
+      // Handle other errors or rethrow them if not handled here
       if (error.toString().contains("Money send failed")) {
-        // Show a SnackBar or AlertDialog to inform the user
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Money send failed'),
@@ -59,17 +127,15 @@ class _addwalletamountState extends State<addwalletamount> {
           ),
         );
       } else {
-        // Handle other errors or rethrow them if not handled here
         throw ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Internal Server Error'),
+            content: Text('Amount should less than Wallet Amount'),
             duration: Duration(seconds: 3),
           ),
         );
       }
     }
   }
-
 
   void updateButtonState() {
     setState(() {
@@ -82,10 +148,10 @@ class _addwalletamountState extends State<addwalletamount> {
   bool validateForm() {
 
 
-    if (transactionPassword == null || transactionPassword!.isEmpty) {
+    if (transactionPassword == null || transactionPassword!.length < 6) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Please enter a valid transactionPassword'),
+          content: Text('Password must be at least 6 characters long'),
           duration: Duration(seconds: 3),
         ),
       );
@@ -123,9 +189,12 @@ class _addwalletamountState extends State<addwalletamount> {
   @override
   void initState() {
     super.initState();
+    _Walletdetails();
     // Set the initial value of the TextField to the reduced amount
     amountController.text = (enteredAmount * 0.96).toStringAsFixed(2);
   }
+
+
 
 
 
@@ -142,6 +211,7 @@ class _addwalletamountState extends State<addwalletamount> {
       ),
       body: Column(
         children: [
+
 
           SizedBox(height: 20,),
 
@@ -316,7 +386,7 @@ class _addwalletamountState extends State<addwalletamount> {
                           borderRadius: BorderRadius.all(Radius.circular(10))
                       ),
                       child:Center(
-                          child: Text("Confirm Deposit",style: TextStyle(fontSize: 14,color: bg1),))
+                          child: Text("Withdraw",style: TextStyle(fontSize: 14,color: bg1),))
                   ),
 
                 ],

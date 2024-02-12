@@ -650,16 +650,16 @@ class _homepageState extends State<homepage> {
             SizedBox(
               height: 20,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-              child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text("Trading View",style: TextStyle(color: bg1),)),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+            //   child: Align(
+            //       alignment: Alignment.topLeft,
+            //       child: Text("Trading View",style: TextStyle(color: bg1),)),
+            // ),
 
-            Image.asset(
-              'assets/png/forex.png',
-            ),
+            // Image.asset(
+            //   'assets/png/forex.png',
+            // ),
 
             SizedBox(height: 30,),
 

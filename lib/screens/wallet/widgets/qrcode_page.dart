@@ -130,7 +130,7 @@ class _qrcodepageState extends State<qrcodepage> {
         iconTheme: IconThemeData(
           color: bg1,
         ),
-        title: Text("Withdrawal Fund", style: TextStyle(color: yellow2, fontSize: 18)),
+        title: Text("Add Fund",style: TextStyle(color: yellow2, fontSize: 18)),
       ),
 
       body: SingleChildScrollView(
@@ -193,7 +193,7 @@ class _qrcodepageState extends State<qrcodepage> {
 
 
             Text(
-              "USDT.BEP20 Deposit = ${amount != null ? '\$$amount' : '\$0'}",
+              "USDT.TRC20 Deposit = ${amount != null ? '\$$amount' : '\$0'}",
               style: TextStyle(
                 fontSize: 14,
                 color: amount != null && amount != 0 ? bg1 : Colors.white,
@@ -209,7 +209,7 @@ class _qrcodepageState extends State<qrcodepage> {
 
             SizedBox(height: 20,),
             
-            Text("(inducing base amount + Transaction fee)",style: TextStyle(color: bluegreay,fontSize: 12),),
+            Text("(inducing base amount + TXN fee)",style: TextStyle(color: bluegreay,fontSize: 12),),
 
             SizedBox(height: 20,),
 
@@ -286,7 +286,7 @@ class _qrcodepageState extends State<qrcodepage> {
                 ),
                 child: TextField(
                   decoration: InputDecoration(
-                    hintText: 'Transaction Number',
+                    hintText: 'TXN Number',
                     hintStyle: TextStyle(color: yellow),
                     contentPadding: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
                     enabledBorder: OutlineInputBorder(

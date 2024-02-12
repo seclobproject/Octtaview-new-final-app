@@ -450,8 +450,6 @@ class _walletpageState extends State<walletpage> {
                 }),
           ),
 
-          
-
         ],
       ),
     );

@@ -46,14 +46,16 @@ class _addmemberState extends State<addmember> {
         "transactionPassword":tnxpassword,
         "password": password,
       };
-
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Member Add Successfully'),
+      ));
       var response = await MemberService.addmember(reqData);
       log.i('add member create . $response');
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => Bottomnav()),
-      );
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => Bottomnav()),
+      // );
     } catch (error) {
       // Handle specific error cases
       if (error.toString().contains("User already exists!")) {
@@ -84,6 +86,7 @@ class _addmemberState extends State<addmember> {
           phone == null ||
           address == null ||
           password == null ||
+          tnxpassword == null ||
           packagedropdownvalue == null;
     });
   }
@@ -132,10 +135,20 @@ class _addmemberState extends State<addmember> {
     }
 
 
-    if (password == null || password!.length < 8) {
+    if (password == null || password!.length < 6) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Password must be at least 8 characters long'),
+          content: Text('Password must be at least 6 characters long'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return false;
+    }
+
+    if (tnxpassword == null || tnxpassword!.length < 6) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Password must be at least 6 characters long'),
           duration: Duration(seconds: 3),
         ),
       );

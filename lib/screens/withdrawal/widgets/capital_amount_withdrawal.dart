@@ -27,6 +27,46 @@ class _capitalamountwithdrawalsState extends State<capitalamountwithdrawals> {
   bool isButtonDisabled = true;
 
 
+  // Future addmoney() async {
+  //   try {
+  //     setState(() {});
+  //     SharedPreferences prefs = await SharedPreferences.getInstance();
+  //     userid = prefs.getString('userid');
+  //     var reqData = {
+  //       'amount': amount,
+  //       'transactionPassword': transactionPassword,
+  //       'walletUrl': walletUrl,
+  //     };
+  //
+  //     var response = await CapitalService.capitalamountwithdrawal(reqData);
+  //     log.i('add money  . $response');
+  //
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => Bottomnav()),
+  //     );
+  //   } catch (error) {
+  //     // Handle specific error cases
+  //     if (error.toString().contains("Money send failed")) {
+  //       // Show a SnackBar or AlertDialog to inform the user
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(
+  //           content: Text('Money send failed'),
+  //           duration: Duration(seconds: 3),
+  //         ),
+  //       );
+  //     } else {
+  //       // Handle other errors or rethrow them if not handled here
+  //       throw ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(
+  //           content: Text('Withdraw only permitted after 90 days from the last fund addition'),
+  //           duration: Duration(seconds: 3),
+  //         ),
+  //       );
+  //     }
+  //   }
+  // }
+
   Future addmoney() async {
     try {
       setState(() {});
@@ -40,15 +80,27 @@ class _capitalamountwithdrawalsState extends State<capitalamountwithdrawals> {
 
       var response = await CapitalService.capitalamountwithdrawal(reqData);
       log.i('add money  . $response');
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Capital Withdrawal Successfull'),
+      ));
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => Bottomnav()),
-      );
+      if (response['success'] == false && response['statusCode'] == 401) {
+        // Show a SnackBar or AlertDialog for wrong transaction password
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Wrong Transaction Password'),
+            duration: Duration(seconds: 3),
+          ),
+        );
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Bottomnav()),
+        );
+      }
     } catch (error) {
-      // Handle specific error cases
+      // Handle other errors or rethrow them if not handled here
       if (error.toString().contains("Money send failed")) {
-        // Show a SnackBar or AlertDialog to inform the user
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Money send failed'),
@@ -56,17 +108,15 @@ class _capitalamountwithdrawalsState extends State<capitalamountwithdrawals> {
           ),
         );
       } else {
-        // Handle other errors or rethrow them if not handled here
         throw ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Internal Server Error'),
+            content: Text('Withdraw only permitted after 90 days from the last fund addition'),
             duration: Duration(seconds: 3),
           ),
         );
       }
     }
   }
-
 
   void updateButtonState() {
     setState(() {
@@ -79,10 +129,10 @@ class _capitalamountwithdrawalsState extends State<capitalamountwithdrawals> {
   bool validateForm() {
 
 
-    if (transactionPassword == null || transactionPassword!.isEmpty) {
+    if (transactionPassword == null || transactionPassword!.length < 6) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Please enter a valid transactionPassword'),
+          content: Text('Password must be at least 6 characters long'),
           duration: Duration(seconds: 3),
         ),
       );
@@ -122,7 +172,7 @@ class _capitalamountwithdrawalsState extends State<capitalamountwithdrawals> {
         iconTheme: IconThemeData(
           color: bg1,
         ),
-        title: Text("Withdrawal Fund", style: TextStyle(color: yellow2, fontSize: 18)),
+        title: Text("Capital Withdrawal", style: TextStyle(color: yellow2, fontSize: 18)),
       ),
       body: Column(
         children: [
@@ -290,7 +340,7 @@ class _capitalamountwithdrawalsState extends State<capitalamountwithdrawals> {
                           borderRadius: BorderRadius.all(Radius.circular(10))
                       ),
                       child:Center(
-                          child: Text("Confirm Deposit",style: TextStyle(fontSize: 14,color: bg1),))
+                          child: Text("Withdraw",style: TextStyle(fontSize: 14,color: bg1),))
                   ),
 
                 ],
