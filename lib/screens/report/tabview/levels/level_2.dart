@@ -108,8 +108,8 @@ class _leveltwoState extends State<leveltwo> {
                             style: TextStyle(color: btnttext, fontSize: 10),
                           ),
                           Container(
-                            width: 25,
-                            height: 20,
+                            // width: 25,
+                            // height: 20,
                             child: Text(
                               '\$${userData['LevelAmountCredited']?.toString()}' ?? 'No data',
                               style: TextStyle(color: btnttext, fontSize: 10),

@@ -474,7 +474,7 @@ class _homepageState extends State<homepage> {
 
                       children: [
                         Text('\$${homedata?['dailyBonus'].toString() ?? '0'}',style:TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),),
-                        Text("9:00 PM November 20",style:TextStyle(color: btnttext,fontSize: 10),),
+                        // Text("9:00 PM November 20",style:TextStyle(color: btnttext,fontSize: 10),),
                         Text("Daily Bonus",style:TextStyle(color: bg1,fontSize: 10),),
                       ],
                     ),

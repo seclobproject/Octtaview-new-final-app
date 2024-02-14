@@ -192,7 +192,13 @@ class _addwalletamountState extends State<addwalletamount> {
       } else {
         throw ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Wrong Transaction Password'),
+            content: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text('Insufficient balance or Wrong transaction password'),
+              ],
+            ),
             duration: Duration(seconds: 3),
           ),
         );
@@ -235,7 +241,7 @@ class _addwalletamountState extends State<addwalletamount> {
     if (walletUrl == null || walletUrl!.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Please enter a valid walletUrl'),
+          content: Text('Please enter a valid wallet url'),
           duration: Duration(seconds: 3),
         ),
       );
@@ -243,14 +249,8 @@ class _addwalletamountState extends State<addwalletamount> {
     }
 
 
-
-
     return true;
   }
-
-
-
-
 
   TextEditingController amountController = TextEditingController();
 
@@ -261,10 +261,6 @@ class _addwalletamountState extends State<addwalletamount> {
     // Set the initial value of the TextField to the reduced amount
     amountController.text = (enteredAmount * 0.96).toStringAsFixed(2);
   }
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -333,7 +329,7 @@ class _addwalletamountState extends State<addwalletamount> {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Align(
               alignment: Alignment.center,
-              child: Text('Withdraw as much as you want, but never less than 15 dollar',
+              child: Text('Withdraw as much as you want, but never less than 15. dollar',
                 style: TextStyle(color: bg1,fontSize: 11),),
             ),
           ),
