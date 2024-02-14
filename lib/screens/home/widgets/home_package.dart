@@ -240,7 +240,7 @@ class _packagesState extends State<packages> {
 
           Expanded(
             child: ListView.builder(
-                itemCount: packagedata['allFundHistory']?.length ?? 0,
+                itemCount: packagedata['addFundHistory']?.length ?? 0,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding:  EdgeInsets.symmetric(horizontal: 20),
@@ -260,15 +260,15 @@ class _packagesState extends State<packages> {
                                   width: 68,
                                   height: 15,
                                   child: Text(
-                                    packagedata['allFundHistory'][index]['createdAt'] ?? 'Default Value',
+                                    packagedata['addFundHistory'][index]['createdAt'] ?? 'Default Value',
                                     style: TextStyle(color: btnttext, fontSize: 10),
                                   ),
                                 ),
-                                Text("10:30 PM",style: TextStyle(color: btnttext,fontSize: 10)),
+
                               ],
                             ),
-                            Text(packagedata['allFundHistory'][index]['transactionCode']?? 'Default Value',style: TextStyle(color: btnttext,fontSize: 10)),
-                            Text('\$${packagedata['allFundHistory'][index]['topUpAmount'].toString()}',style: TextStyle(color: btnttext,fontSize: 10)),
+                            Text(packagedata['addFundHistory'][index]['transactionCode']?? 'Default Value',style: TextStyle(color: btnttext,fontSize: 10)),
+                            Text('\$${packagedata['addFundHistory'][index]['topUpAmount'].toString()}',style: TextStyle(color: btnttext,fontSize: 10)),
 
                             Container(
                               height: 20,
@@ -277,7 +277,7 @@ class _packagesState extends State<packages> {
                                 color: greendark,
                                 borderRadius: BorderRadius.all(Radius.circular(10))
                               ),
-                              child: Center(child: Text(packagedata['allFundHistory'][index]['status'],style: TextStyle(fontSize: 8,color: bg1),)),
+                              child: Center(child: Text(packagedata['addFundHistory'][index]['status'],style: TextStyle(fontSize: 8,color: bg1),)),
                             )
                           ],
                         ),

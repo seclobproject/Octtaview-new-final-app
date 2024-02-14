@@ -33,6 +33,48 @@ class _addmemberState extends State<addmember> {
   String? tnxpassword;
 
 
+  // Future addmember() async {
+  //   try {
+  //     setState(() {});
+  //     SharedPreferences prefs = await SharedPreferences.getInstance();
+  //     userid = prefs.getString('userid');
+  //     var reqData = {
+  //       'username': username,
+  //       'email': email,
+  //       'phone': phone,
+  //       "address": address,
+  //       "transactionPassword":tnxpassword,
+  //       "password": password,
+  //     };
+  //
+  //     var response = await MemberService.addmember(reqData);
+  //     log.i('add member create . $response');
+  //
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => Bottomnav()),
+  //     );
+  //   } catch (error) {
+  //     // Handle specific error cases
+  //     if (error.toString().contains("User already exists!")) {
+  //       // Show a SnackBar or AlertDialog to inform the user
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(
+  //           content: Text('User already exists!'),
+  //           duration: Duration(seconds: 3),
+  //         ),
+  //       );
+  //     } else {
+  //       // Handle other errors or rethrow them if not handled here
+  //       throw ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(
+  //           content: Text('User already exists!'),
+  //           duration: Duration(seconds: 3),
+  //         ),
+  //       );
+  //     }
+  //   }
+  // }
   Future addmember() async {
     try {
       setState(() {});
@@ -43,23 +85,31 @@ class _addmemberState extends State<addmember> {
         'email': email,
         'phone': phone,
         "address": address,
-        "transactionPassword":tnxpassword,
+        "transactionPassword": tnxpassword,
         "password": password,
       };
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Member Add Successfully'),
-      ));
+
       var response = await MemberService.addmember(reqData);
       log.i('add member create . $response');
 
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => Bottomnav()),
-      // );
+      // Check for success in the response and show a success SnackBar
+      if (response['msg'] == 'User Add Successfully') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('User added successfully!'),
+            duration: Duration(seconds: 3),
+          ),
+        );
+      }
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Bottomnav()),
+      );
     } catch (error) {
       // Handle specific error cases
-      if (error.toString().contains("User already exists!")) {
-        // Show a SnackBar or AlertDialog to inform the user
+      if (error.toString().contains("User Already Exist")) {
+        // Show a SnackBar to inform the user
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('User already exists!'),
@@ -67,8 +117,10 @@ class _addmemberState extends State<addmember> {
           ),
         );
       } else {
-        // Handle other errors or rethrow them if not handled here
-        throw ScaffoldMessenger.of(context).showSnackBar(
+        // Handle other errors
+        print('Error: $error');
+        // You may choose to show a generic error message to the user
+        ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('User already exists!'),
             duration: Duration(seconds: 3),

@@ -1,10 +1,14 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
+import '../authentication/LandingPage.dart';
+
 import 'package:page_transition/page_transition.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-// import 'package:audioplayers/audioplayers.dart';
+
 import '../resources/color.dart';
-import 'LandingPage.dart';
+
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -12,16 +16,18 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // late AudioPlayer _audioPlayer;
+  late AudioPlayer _audioPlayer;
 
   @override
   void initState() {
     super.initState();
-    // _audioPlayer = AudioPlayer();
-    // _playAudio();
+    super.initState();
+    _audioPlayer = AudioPlayer();
+    _loadAudio();
+    _audioPlayer.play();
 
     Timer(
-      Duration(seconds: 3),
+      Duration(seconds: 6),
           () => Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -30,6 +36,13 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+
+  Future<void> _loadAudio() async {
+    await _audioPlayer.setAsset('assets/logo_octaview_sound.mp3');
+  }
+
+
+
 
   // Future<void> _playAudio() async {
   //   try {
@@ -57,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
-      duration: 6000,
+      duration: 9000,
       splashIconSize: 350,
       splash: 'assets/logo/logooctavia.png',
       nextScreen: Landing_Page(title: 'landingpage'),
@@ -65,6 +78,12 @@ class _MyHomePageState extends State<MyHomePage> {
       pageTransitionType: PageTransitionType.scale,
       backgroundColor: sevensgbg,
     );
+  }
+
+  @override
+  void dispose() {
+    _audioPlayer.dispose();
+    super.dispose();
   }
 }
 

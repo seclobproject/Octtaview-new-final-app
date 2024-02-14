@@ -81,86 +81,90 @@ class _verificationpageState extends State<verificationpage> {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      backgroundColor: sevensgbg,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+    return  SingleChildScrollView(
+      child: Scaffold(
+        backgroundColor: sevensgbg,
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
 
-          GestureDetector(
-            onTap: (){
-              pickImage();
-            },
-            child: Align(
-              alignment: Alignment.center,
-              child: Container(
-                height: 65,
-                width: 65,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(100)),
-                  gradient: LinearGradient(
-                    colors: [yellow, yellow2],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
+            SizedBox(height: 60,),
+
+            GestureDetector(
+              onTap: (){
+                pickImage();
+              },
+              child: Align(
+                alignment: Alignment.center,
+                child: Container(
+                  height: 65,
+                  width: 65,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(100)),
+                    gradient: LinearGradient(
+                      colors: [yellow, yellow2],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
                   ),
-                ),
-                child: Image.asset(
-                  'assets/png/upload.png',
-                  height: 10,
-                  width: 10,
+                  child: Image.asset(
+                    'assets/png/upload.png',
+                    height: 10,
+                    width: 10,
 
+                  ),
                 ),
               ),
             ),
-          ),
 
-          SizedBox(height: 20,),
-
-
-          Text("National ID Card  or Driving License Upload ",style: TextStyle(fontSize: 12,color: bg1),),
+            SizedBox(height: 20,),
 
 
-          SizedBox(height: 50,),
+            Text("National ID Card  or Driving License Upload ",style: TextStyle(fontSize: 12,color: bg1),),
 
 
-          SizedBox(height: 10,),
+            SizedBox(height: 50,),
 
 
-          imageUrl != null
-              ? Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-            child: Image.file(File(imageUrl!)),
-          )
-              : Text("No image selected",style: TextStyle(color: Colors.red),),
-          SizedBox(height: 10),
+            SizedBox(height: 10,),
 
-          InkWell(
-            onTap: (){
-              uploadImage();
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
-                height: 40,
-                width: 400,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [yellow, yellow2], // Specify your gradient colors
-                    begin: Alignment.topCenter, // Specify the alignment of the gradient (start from the left)
-                    end: Alignment.bottomCenter, // Specify the alignment of the gradient (end at the right)
+
+            imageUrl != null
+                ? Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+              child: Image.file(File(imageUrl!)),
+            )
+                : Text("No image selected",style: TextStyle(color: Colors.red),),
+            SizedBox(height: 10),
+
+            InkWell(
+              onTap: (){
+                uploadImage();
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Container(
+                  height: 40,
+                  width: 400,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [yellow, yellow2], // Specify your gradient colors
+                      begin: Alignment.topCenter, // Specify the alignment of the gradient (start from the left)
+                      end: Alignment.bottomCenter, // Specify the alignment of the gradient (end at the right)
+                    ),
+                    borderRadius: BorderRadius.circular(10), // Optional: Add borderRadius to round the corners
                   ),
-                  borderRadius: BorderRadius.circular(10), // Optional: Add borderRadius to round the corners
+                  child: Center(
+                      child: Text("Upload",style: TextStyle(fontSize: 12,color: bg1),)),
                 ),
-                child: Center(
-                    child: Text("Upload",style: TextStyle(fontSize: 12,color: bg1),)),
               ),
             ),
-          ),
 
 
-        ],
+          ],
+        ),
+
       ),
-
     );
   }
 }

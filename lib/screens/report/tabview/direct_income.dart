@@ -122,8 +122,7 @@ class _directincomeState extends State<directincome> {
                             ),
                             Text(transationreportdata['directIncome'][index]['transactionCode'] ?? 'no data',style: TextStyle(color: btnttext,fontSize: 10)),
                             Container(
-                                child: Text(transationreportdata['directIncome'][index]['amountCredited'].toString() ?? 'no data',style: TextStyle(color: btnttext,fontSize: 10))),
-
+                                child: Text('\$${transationreportdata['directIncome'][index]['amountCredited'].toString()}' ?? 'no data',style: TextStyle(color: btnttext,fontSize: 10))),
                           ],
                         ),
                         SizedBox(height: 5,),

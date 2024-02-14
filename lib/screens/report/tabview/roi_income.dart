@@ -120,7 +120,7 @@ class _roiincomeState extends State<roiincome> {
                             Text(transationreportdata['dailyROIHistory'][index]['name'] ?? 'no data',style: TextStyle(color: btnttext,fontSize: 10)),
                             Container(
                                 width: 40,
-                                child: Text(transationreportdata['dailyROIHistory'][index]['creditedAmount'].toString() ?? 'no data',style: TextStyle(color: btnttext,fontSize: 10))),
+                                child: Text('\$${transationreportdata['dailyROIHistory'][index]['creditedAmount'].toString()}' ?? 'no data',style: TextStyle(color: btnttext,fontSize: 10))),
 
                           ],
                         ),

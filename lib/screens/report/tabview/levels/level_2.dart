@@ -104,14 +104,14 @@ class _leveltwoState extends State<leveltwo> {
                             ],
                           ),
                           Text(
-                            userData['capitalAmount']?.toString() ?? 'No data',
+                            '\$${userData['capitalAmount']?.toString()}' ?? 'No data',
                             style: TextStyle(color: btnttext, fontSize: 10),
                           ),
                           Container(
-                            width: 20,
+                            width: 25,
                             height: 20,
                             child: Text(
-                              userData['LevelAmountCredited']?.toString() ?? 'No data',
+                              '\$${userData['LevelAmountCredited']?.toString()}' ?? 'No data',
                               style: TextStyle(color: btnttext, fontSize: 10),
                             ),
                           ),

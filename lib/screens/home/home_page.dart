@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:octtaviewnew/screens/home/widgets/home_package.dart';
 import 'package:octtaviewnew/screens/home/widgets/verification_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../commonpage/test.dart';
 import '../../navigation/app_drawer.dart';
 import '../../resources/color.dart';
 import '../../services/home_service.dart';
@@ -98,6 +99,7 @@ class _homepageState extends State<homepage> {
                       InkWell(
                         onTap: () {
                           Share.share("https://admin.octtaview.com/auth/registerformik?id=$userid");
+                          // Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyAudioPlayer()));
                         },
                         child:  Container(
                           height: 35,
@@ -452,11 +454,8 @@ class _homepageState extends State<homepage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                            height:20,
-                            width: 70,
-                            child: Text('\$${homedata?['capitalAmount'].toString() ?? '0'}',style:TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),)),
-                        Text("Wallet Amount ",style:TextStyle(color: bg1,fontSize: 10),),
+                        Text(homedata?['packageName'] ?? '0',style:TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),),
+                        Text("Package Name",style:TextStyle(color: bg1,fontSize: 10),),
                       ],
                     ),
                   ),
@@ -523,7 +522,7 @@ class _homepageState extends State<homepage> {
                             height:20,
                             width: 70,
                             child: Text('\$${homedata?['totalIncome'].toString() ?? '0'}',style:TextStyle(color: yellow,fontSize: 16,fontWeight: FontWeight.w700),)),
-                        Text("Total Income",style:TextStyle(color: bg1,fontSize: 10),),
+                        Text("Wallet Amount",style:TextStyle(color: bg1,fontSize: 10),),
                       ],
                     ),
                   ),

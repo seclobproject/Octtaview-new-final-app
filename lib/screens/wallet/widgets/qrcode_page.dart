@@ -45,6 +45,8 @@ class _qrcodepageState extends State<qrcodepage> {
       setState(() {});
       SharedPreferences prefs = await SharedPreferences.getInstance();
       userid = prefs.getString('userid');
+
+
       var reqData = {
         'amount': amount,
         'transactionCode': transactionCode,
@@ -108,6 +110,16 @@ class _qrcodepageState extends State<qrcodepage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Please enter a valid amount number'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return false;
+    }
+
+    if (double.parse(amount!) < 50) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Amount must be at least 50'),
           duration: Duration(seconds: 3),
         ),
       );
@@ -189,7 +201,17 @@ class _qrcodepageState extends State<qrcodepage> {
               ),
             ),
 
-            SizedBox(height: 40,),
+            SizedBox(height: 10,),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Align(
+                alignment: Alignment.center,
+                child: Text('Minimum of 50 dollar is required',
+                  style: TextStyle(color: bg1,fontSize: 11),),
+              ),
+            ),
+ 
+            SizedBox(height: 30,),
 
 
             Text(

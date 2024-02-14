@@ -94,12 +94,12 @@ class _tablevelthreeState extends State<tablevelthree> {
 
                                   Padding(
                                     padding:  EdgeInsets.symmetric(horizontal: 20,),
-                                    child: Text("Sponsor Id",style: TextStyle(color: bg1,fontSize: 10),),
+                                    child: Text("Sponsor Name",style: TextStyle(color: bg1,fontSize: 10),),
                                   ),
                                   SizedBox(height: 5,),
                                   Padding(
                                     padding:  EdgeInsets.symmetric(horizontal: 20,),
-                                    child: Text(memberdata['ownSponserId'],style: TextStyle(color: bg1,fontSize: 10),),
+                                    child: Text(memberdata['child3'][index]['sponserName'],style: TextStyle(color: bg1,fontSize: 10),),
                                   ),
                                 ],
                               ),

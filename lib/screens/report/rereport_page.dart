@@ -86,7 +86,7 @@ class _reportpageState extends State<reportpage> {
           ),
           centerTitle: true,
           title: Text(
-            "Transaction History ",
+            "Report",
             style: TextStyle(color: yellow, fontSize: 16),
           ),
           elevation: 0,

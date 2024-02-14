@@ -101,13 +101,13 @@ class _levelthreeState extends State<levelthree> {
                               ),
                             ],
                           ),
-                          Text(levelonedata['level3Income'][index]['capitalAmount'].toString() ?? 'no data',
+                          Text('\$${levelonedata['level3Income'][index]['capitalAmount'].toString()}' ?? 'no data',
                               style: TextStyle(color: btnttext, fontSize: 10)),
                           Container(
-                            width: 20,
+                            width: 25,
                             height: 20,
                             child: Text(
-                              levelonedata['level3Income'][index]['LevelAmountCredited'].toString() ?? 'no data',
+                              '\$${levelonedata['level3Income'][index]['LevelAmountCredited'].toString()}' ?? 'no data',
                               style: TextStyle(color: btnttext, fontSize: 10),
                             ),
                           ),
@@ -126,7 +126,6 @@ class _levelthreeState extends State<levelthree> {
           ),
         ],
       ),
-
 
     );
   }

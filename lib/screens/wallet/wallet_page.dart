@@ -395,7 +395,7 @@ class _walletpageState extends State<walletpage> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(walletdata['walletWithdrawHistory'][index]['tnxID'],style: TextStyle(color: bg1,fontSize: 10),),
+                                Text(walletdata['walletWithdrawHistory'][index]['txnID'],style: TextStyle(color: bg1,fontSize: 10),),
 
 
 
@@ -418,7 +418,7 @@ class _walletpageState extends State<walletpage> {
                                   width: 50,
                                   decoration: BoxDecoration(
                                       gradient: LinearGradient(
-                                        colors: [yellow, yellow2], // Specify your gradient colors
+                                        colors: [greendark, greendark], // Specify your gradient colors
                                         begin: Alignment.topCenter, // Specify the alignment of the gradient (start from the left)
                                         end: Alignment.bottomCenter, // Specify the alignment of the gradient (end at the right)
                                       ),
